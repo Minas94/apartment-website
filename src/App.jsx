@@ -37,7 +37,7 @@ const T = {
       cta_house:"Explore the Apartment",
       cta_guide:"Guest Guide",
       book:"Book on Booking.com ↗",
-      amenities:["Up to 4 guests","2 Bedrooms","1 Bathroom","Wi-Fi included","Air conditioning","Outdoor terrace","Private grill","5 min to beach"],
+      amenities:["Up to 5 guests","2 Bedrooms","1 Bathroom","Wi-Fi included","Air conditioning","Outdoor terrace","Private grill","5 min to beach"],
       cards:[
         { title:"The Apartment", text:"Two bedrooms, a fully equipped kitchen, and spaces full of character — vintage tiles, original artwork, colourful details." },
         { title:"Guest Guide", text:"Everything you need to know: check-in, the grill, TV remotes, appliances, and house rules — all in one place." },
@@ -47,7 +47,7 @@ const T = {
     },
     house: {
       title:"The Apartment",
-      sub:"Two bedrooms, a fully equipped kitchen, living area, bathroom, and a private outdoor terrace with grill. Space for up to 4 guests.",
+      sub:"Two bedrooms, a fully equipped kitchen, living area, bathroom, and a private outdoor terrace with grill. Space for up to 5 guests.",
       rooms:"Rooms",
       room_main:"Master Bedroom",
       room_main_desc:"Double bed, rattan headboard, olive green wardrobe, air conditioning, tiled floor.",
@@ -133,7 +133,7 @@ const T = {
       cta_house:"Scopri l'appartamento",
       cta_guide:"Guida Ospiti",
       book:"Prenota su Booking.com ↗",
-      amenities:["Fino a 4 ospiti","2 Camere da letto","1 Bagno","Wi-Fi incluso","Aria condizionata","Terrazza esterna","Grill privato","5 min dalla spiaggia"],
+      amenities:["Fino a 5 ospiti","2 Camere da letto","1 Bagno","Wi-Fi incluso","Aria condizionata","Terrazza esterna","Grill privato","5 min dalla spiaggia"],
       cards:[
         { title:"L'Appartamento", text:"Due camere, cucina attrezzata e spazi pieni di carattere — piastrelle vintage, opere d'arte, dettagli colorati." },
         { title:"Guida Ospiti", text:"Tutto quello che serve: check-in, griglia, telecomandi, elettrodomestici e regole della casa." },
@@ -143,7 +143,7 @@ const T = {
     },
     house: {
       title:"L'Appartamento",
-      sub:"Due camere, cucina attrezzata, soggiorno, bagno e terrazza privata con grill. Fino a 4 ospiti.",
+      sub:"Due camere, cucina attrezzata, soggiorno, bagno e terrazza privata con grill. Fino a 5 ospiti.",
       rooms:"Le Stanze",
       room_main:"Camera Matrimoniale",       room_main_desc:"Letto matrimoniale, testiera in rattan, armadio verde oliva, aria condizionata, pavimento in maiolica.",
       room_kids:"Camera Bambini",            room_kids_desc:"Letto a castello (matrimoniale sotto, singolo sopra) più singolo estraibile. Pareti blu, armadio a muro.",
@@ -223,7 +223,7 @@ const T = {
       cta_house:"Die Wohnung entdecken",
       cta_guide:"Gästeguide",
       book:"Auf Booking.com buchen ↗",
-      amenities:["Bis zu 4 Gäste","2 Schlafzimmer","1 Badezimmer","Wi-Fi inklusive","Klimaanlage","Außenterrasse","Privater Grill","5 Min. zum Strand"],
+      amenities:["Bis zu 5 Gäste","2 Schlafzimmer","1 Badezimmer","Wi-Fi inklusive","Klimaanlage","Außenterrasse","Privater Grill","5 Min. zum Strand"],
       cards:[
         { title:"Die Wohnung", text:"Zwei Zimmer, vollausgestattete Küche und Räume voller Charakter — Vintage-Fliesen, Kunst, bunte Details." },
         { title:"Gästeguide", text:"Alles was Sie brauchen: Check-in, Grill, TV-Fernbedienungen, Geräte und Hausregeln." },
@@ -233,7 +233,7 @@ const T = {
     },
     house: {
       title:"Die Wohnung",
-      sub:"Zwei Schlafzimmer, Küche, Wohnzimmer, Bad und Terrasse mit Grill. Bis zu 4 Gäste.",
+      sub:"Zwei Schlafzimmer, Küche, Wohnzimmer, Bad und Terrasse mit Grill. Bis zu 5 Gäste.",
       rooms:"Zimmer",
       room_main:"Hauptschlafzimmer",  room_main_desc:"Doppelbett, Rattankopfteil, olivgrüner Kleiderschrank, Klimaanlage.",
       room_kids:"Kinderzimmer",        room_kids_desc:"Etagenbett (Doppel unten, Einzel oben) plus ausziehbares Einzelbett. Blaue Wände.",
@@ -313,7 +313,7 @@ const T = {
       cta_house:"Poznaj apartament",
       cta_guide:"Przewodnik gościa",
       book:"Zarezerwuj na Booking.com ↗",
-      amenities:["Do 4 gości","2 sypialnie","1 łazienka","Wi-Fi w cenie","Klimatyzacja","Taras zewnętrzny","Prywatny grill","5 min od plaży"],
+      amenities:["Do 5 gości","2 sypialnie","1 łazienka","Wi-Fi w cenie","Klimatyzacja","Taras zewnętrzny","Prywatny grill","5 min od plaży"],
       cards:[
         { title:"Apartament", text:"Dwie sypialnie, w pełni wyposażona kuchnia i pełne uroku przestrzenie — vintage płytki, dzieła sztuki, kolorowe detale." },
         { title:"Przewodnik gościa", text:"Wszystko, czego potrzebujesz: zameldowanie, grill, piloty, sprzęt i zasady domu." },
@@ -323,7 +323,7 @@ const T = {
     },
     house: {
       title:"Apartament",
-      sub:"Dwie sypialnie, kuchnia, salon, łazienka i prywatny taras z grillem. Do 4 gości.",
+      sub:"Dwie sypialnie, kuchnia, salon, łazienka i prywatny taras z grillem. Do 5 gości.",
       rooms:"Pokoje",
       room_main:"Sypialnia główna",   room_main_desc:"Łóżko podwójne, zagłówek rattanowy, szafa w kolorze oliwkowym, klimatyzacja.",
       room_kids:"Pokój dziecięcy",    room_kids_desc:"Łóżko piętrowe (podwójne na dole, pojedyncze na górze) plus rozkładane łóżko. Niebieskie ściany.",
@@ -403,7 +403,7 @@ const T = {
       cta_house:"Objavte apartmán",
       cta_guide:"Sprievodca hosťa",
       book:"Rezervovať na Booking.com ↗",
-      amenities:["Až 4 hostia","2 spálne","1 kúpeľňa","Wi-Fi v cene","Klimatizácia","Vonkajšia terasa","Súkromný gril","5 min k pláži"],
+      amenities:["Až 5 hostí","2 spálne","1 kúpeľňa","Wi-Fi v cene","Klimatizácia","Vonkajšia terasa","Súkromný gril","5 min k pláži"],
       cards:[
         { title:"Apartmán", text:"Dve spálne, plne vybavená kuchyňa a priestory plné charakteru — vintage dlaždice, umenie, farebné detaily." },
         { title:"Sprievodca hosťa", text:"Všetko čo potrebujete: check-in, gril, TV diaľkové ovládače, spotrebiče a domáci poriadok." },
@@ -413,7 +413,7 @@ const T = {
     },
     house: {
       title:"Apartmán",
-      sub:"Dve spálne, kuchyňa, obývačka, kúpeľňa a súkromná terasa s grilom. Až 4 hostia.",
+      sub:"Dve spálne, kuchyňa, obývačka, kúpeľňa a súkromná terasa s grilom. Až 5 hostí.",
       rooms:"Izby",
       room_main:"Hlavná spálňa",      room_main_desc:"Manželská posteľ, ratanové čelo, olivová skriňa, klimatizácia.",
       room_kids:"Detská izba",        room_kids_desc:"Poschodová posteľ (dvojlôžko dole, jednolôžko hore) plus výsuvné jednolôžko. Modré steny.",
@@ -493,7 +493,7 @@ const T = {
       cta_house:"Fedezze fel az apartmant",
       cta_guide:"Vendégkalauz",
       book:"Foglaljon a Booking.com-on ↗",
-      amenities:["Legfeljebb 4 fő","2 hálószoba","1 fürdőszoba","Wi-Fi díjmentes","Légkondicionáló","Külső terasz","Saját grill","5 perc a strandtól"],
+      amenities:["Legfeljebb 5 fő","2 hálószoba","1 fürdőszoba","Wi-Fi díjmentes","Légkondicionáló","Külső terasz","Saját grill","5 perc a strandtól"],
       cards:[
         { title:"Az Apartman", text:"Két hálószoba, teljesen felszerelt konyha és karakteres terek — vintage csempék, műalkotások, színes részletek." },
         { title:"Vendégkalauz", text:"Minden, amire szüksége van: bejelentkezés, grill, TV távirányítók, háztartási gépek és házirendek." },
@@ -503,7 +503,7 @@ const T = {
     },
     house: {
       title:"Az Apartman",
-      sub:"Két hálószoba, konyha, nappali, fürdőszoba és privát terasz grillel. Legfeljebb 4 vendég.",
+      sub:"Két hálószoba, konyha, nappali, fürdőszoba és privát terasz grillel. Legfeljebb 5 vendég.",
       rooms:"Szobák",
       room_main:"Főhálószoba",       room_main_desc:"Franciaágy, rattan fejtámla, olívzöld szekrény, légkondicionáló.",
       room_kids:"Gyerekszoba",       room_kids_desc:"Emeletes ágy (franciaágy lent, egyszemélyes fent) + kihúzható egyszemélyes. Kék falak.",
