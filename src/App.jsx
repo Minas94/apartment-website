@@ -586,6 +586,55 @@ function Wave({ color = C.white, flip = false }) {
   );
 }
 
+function BeachScene() {
+  const n = C.navy;
+  const y = C.yellow;
+  return (
+    <svg viewBox="0 0 1200 180" preserveAspectRatio="none"
+      style={{ display:"block", width:"100%", height:150 }}>
+
+      {/* wave / cream transition */}
+      <path d="M0,122 C200,95 400,152 600,122 C800,92 1000,152 1200,122 L1200,180 L0,180 Z" fill={C.cream} />
+
+      {/* ── SAILBOAT LEFT — waterline at y=100, clearly in the blue sea ── */}
+      <path d="M80,100 L158,100 Q142,117 119,119 Q96,117 80,100 Z" fill={n} />
+      <path d="M119,100 L119,28" stroke={n} strokeWidth="2.5" fill="none" />
+      <path d="M121,30 L121,100 L155,93 Z" fill={y} opacity="0.9" />
+      <path d="M119,32 L119,74 L85,96 Z" fill={y} opacity="0.7" />
+
+      {/* ── CHILD WITH KITE (x≈574) ── */}
+      <circle cx="574" cy="87" r="8" fill={n} />
+      <path d="M574,95 L574,114" stroke={n} strokeWidth="5.5" fill="none" strokeLinecap="round" />
+      <path d="M574,114 L566,127 M574,114 L582,127" stroke={n} strokeWidth="4.5" fill="none" strokeLinecap="round" />
+      <path d="M574,103 L593,95 M574,103 L560,109" stroke={n} strokeWidth="4" fill="none" strokeLinecap="round" />
+      <path d="M593,95 Q624,73 649,44" stroke={n} strokeWidth="1.5" fill="none" opacity="0.5" />
+      <path d="M649,27 L668,44 L649,62 L630,44 Z" fill={y} />
+      <path d="M630,44 L668,44 M649,27 L649,62" stroke={n} strokeWidth="1.5" fill="none" opacity="0.2" />
+      <path d="M649,62 Q657,71 652,81 Q647,90 653,98" stroke={y} strokeWidth="2.5" fill="none" strokeLinecap="round" />
+
+      {/* ── KITESURFER RIGHT — kite on right, rider leans LEFT/back away from kite ── */}
+      {/* board centered at x=853, symmetric span 820–886 */}
+      <path d="M820,117 Q853,126 886,115" stroke={n} strokeWidth="6" fill="none" strokeLinecap="round" />
+      {/* body: feet at x=848, leans back-left to head at x=812 */}
+      <path d="M848,117 L840,108 L828,100 L818,93" stroke={n} strokeWidth="5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="812" cy="86" r="7" fill={n} />
+      {/* arms reach forward-right to control bar */}
+      <path d="M828,100 L836,91" stroke={n} strokeWidth="3.5" fill="none" strokeLinecap="round" />
+      {/* control bar */}
+      <path d="M826,91 L846,89" stroke={n} strokeWidth="4" fill="none" strokeLinecap="round" />
+      {/* kite lines: from bar ends up to parafoil wingtips */}
+      <path d="M826,91 L888,28" stroke={n} strokeWidth="1.5" fill="none" opacity="0.45" />
+      <path d="M846,89 L972,28" stroke={n} strokeWidth="1.5" fill="none" opacity="0.45" />
+      {/* parafoil kite */}
+      <path d="M888,28 C908,4 952,4 972,28 C957,48 903,48 888,28 Z" fill={y} />
+      <path d="M913,43 L916,9" stroke={n} strokeWidth="1" fill="none" opacity="0.25" />
+      <path d="M930,46 L930,6" stroke={n} strokeWidth="1" fill="none" opacity="0.25" />
+      <path d="M947,43 L944,9" stroke={n} strokeWidth="1" fill="none" opacity="0.25" />
+
+    </svg>
+  );
+}
+
 function Nav({ page, setPage, lang, setLang, t, showLangMenu, setShowLangMenu }) {
   return (
     <nav style={{ background:C.navy, position:"sticky", top:0, zIndex:100, boxShadow:"0 2px 12px rgba(0,0,0,0.2)" }}>
@@ -673,7 +722,7 @@ function HomePage({ t, setPage }) {
             ))}
           </div>
         </div>
-        <Wave color={C.cream} />
+        <BeachScene />
       </div>
 
       {/* Amenities strip */}
