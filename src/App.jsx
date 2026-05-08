@@ -676,8 +676,8 @@ function BeachScene() {
   const n = C.navy;
   const y = C.yellow;
   return (
-    <svg viewBox="0 0 1200 180" preserveAspectRatio="xMidYMax slice"
-      style={{ display:"block", width:"100%", height:150 }}>
+    <svg viewBox="0 0 1200 180" preserveAspectRatio="none"
+      className="beach-scene" style={{ display:"block", width:"100%", height:150 }}>
 
       {/* wave / cream transition */}
       <path d="M0,122 C200,95 400,152 600,122 C800,92 1000,152 1200,122 L1200,180 L0,180 Z" fill={C.cream} />
@@ -722,25 +722,33 @@ function BeachScene() {
 }
 
 function Nav({ page, setPage, lang, setLang, t, showLangMenu, setShowLangMenu }) {
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const navTo = (key) => { setPage(key); setMobileOpen(false); setShowLangMenu(false); };
+
   return (
     <nav style={{ background:C.navy, position:"sticky", top:0, zIndex:100, boxShadow:"0 2px 12px rgba(0,0,0,0.2)" }}>
-      <div className="nav-inner" style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", minHeight:56, gap:8 }}>
-        <button className="nav-brand" onClick={() => setPage("home")} style={{ background:"none", border:"none", cursor:"pointer",
+      <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", height:56, gap:8 }}>
+
+        <button onClick={() => navTo("home")} style={{ background:"none", border:"none", cursor:"pointer",
           fontFamily:"Georgia, serif", fontSize:16, fontWeight:700, color:C.white,
           fontStyle:"italic", letterSpacing:"0.3px", padding:0, marginRight:16, flexShrink:0 }}>
           L'Isola D'Oro
         </button>
-        <div className="nav-links" style={{ display:"flex", gap:2, flex:1, flexWrap:"wrap" }}>
+
+        {/* Desktop nav links */}
+        <div className="nav-desktop" style={{ display:"flex", gap:2, flex:1 }}>
           {Object.entries(t.nav).map(([key, label]) => (
-            <button key={key} onClick={() => setPage(key)} style={{
-              background: page === key ? `${C.yellow}22` : "none",
+            <button key={key} onClick={() => navTo(key)} style={{
+              background: page===key ? `${C.yellow}22` : "none",
               border:"none", cursor:"pointer", padding:"6px 10px", borderRadius:4,
-              fontSize:12, color: page === key ? C.yellow : "#b0c8e4",
-              fontWeight: page === key ? 600 : 400, transition:"all 0.15s",
+              fontSize:12, color: page===key ? C.yellow : "#b0c8e4",
+              fontWeight: page===key ? 600 : 400, transition:"all 0.15s",
             }}>{label}</button>
           ))}
         </div>
-        <div style={{ position:"relative", flexShrink:0 }}>
+
+        {/* Desktop lang picker */}
+        <div className="nav-desktop" style={{ position:"relative", flexShrink:0 }}>
           <button onClick={() => setShowLangMenu(!showLangMenu)} style={{
             background: showLangMenu ? `${C.yellow}22` : "none", border:`1px solid ${C.yellow}66`,
             borderRadius:6, cursor:"pointer", padding:"5px 10px", display:"flex", alignItems:"center", gap:6,
@@ -755,9 +763,9 @@ function Nav({ page, setPage, lang, setLang, t, showLangMenu, setShowLangMenu })
               {LANGS.map(l => (
                 <button key={l.code} onClick={() => { setLang(l.code); setShowLangMenu(false); }} style={{
                   display:"flex", alignItems:"center", gap:8, width:"100%", padding:"9px 14px",
-                  background: lang === l.code ? `${C.yellow}22` : "none",
+                  background: lang===l.code ? `${C.yellow}22` : "none",
                   border:"none", cursor:"pointer", fontSize:13,
-                  color: lang === l.code ? C.yellow : "#b0c8e4", textAlign:"left",
+                  color: lang===l.code ? C.yellow : "#b0c8e4", textAlign:"left",
                 }}>
                   <span style={{ fontSize:16 }}>{l.flag}</span> {l.name}
                 </button>
@@ -765,7 +773,41 @@ function Nav({ page, setPage, lang, setLang, t, showLangMenu, setShowLangMenu })
             </div>
           )}
         </div>
+
+        {/* Mobile hamburger */}
+        <button className="nav-hamburger" onClick={() => setMobileOpen(v => !v)} style={{
+          display:"none", background:"none", border:`1px solid rgba(255,255,255,0.3)`,
+          borderRadius:6, cursor:"pointer", padding:"6px 11px",
+          color:C.white, fontSize:20, lineHeight:1, marginLeft:"auto", flexShrink:0,
+        }}>{mobileOpen ? "✕" : "☰"}</button>
       </div>
+
+      {/* Mobile dropdown */}
+      {mobileOpen && (
+        <div style={{ background:C.navy, borderTop:`1px solid rgba(255,255,255,0.1)`, paddingBottom:12 }}>
+          {Object.entries(t.nav).map(([key, label]) => (
+            <button key={key} onClick={() => navTo(key)} style={{
+              display:"block", width:"100%",
+              background: page===key ? `${C.yellow}22` : "none",
+              border:"none", borderBottom:`1px solid rgba(255,255,255,0.05)`,
+              cursor:"pointer", padding:"14px 24px", textAlign:"left",
+              fontSize:15, color: page===key ? C.yellow : "#cce0f5",
+              fontWeight: page===key ? 600 : 400,
+            }}>{label}</button>
+          ))}
+          <div style={{ padding:"12px 24px 0", display:"flex", flexWrap:"wrap", gap:8, marginTop:4 }}>
+            {LANGS.map(l => (
+              <button key={l.code} onClick={() => { setLang(l.code); setMobileOpen(false); }} style={{
+                background: lang===l.code ? `${C.yellow}33` : "rgba(255,255,255,0.07)",
+                border: lang===l.code ? `1px solid ${C.yellow}66` : "1px solid rgba(255,255,255,0.15)",
+                borderRadius:20, cursor:"pointer", padding:"5px 12px",
+                fontSize:12, color: lang===l.code ? C.yellow : "#b0c8e4",
+                fontWeight: lang===l.code ? 600 : 400,
+              }}>{l.flag} {l.code.toUpperCase()}</button>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
@@ -1195,12 +1237,12 @@ export default function App() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
         * { box-sizing: border-box; margin: 0; }
-        @media (max-width: 640px) {
-          .nav-inner { flex-wrap: wrap !important; height: auto !important; padding: 8px 12px 0 !important; gap: 4px !important; }
-          .nav-brand { flex: 1 !important; margin-right: 0 !important; }
-          .nav-links { order: 3; width: 100%; flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; padding: 4px 0 8px; gap: 0 !important; }
-          .nav-links::-webkit-scrollbar { display: none; }
-          .nav-links button { white-space: nowrap; font-size: 11px !important; padding: 5px 8px !important; }
+        .nav-desktop { display: flex; }
+        .nav-hamburger { display: none; }
+        @media (max-width: 680px) {
+          .nav-desktop { display: none !important; }
+          .nav-hamburger { display: block !important; }
+          .beach-scene { height: calc(100vw * 0.15) !important; }
           .hero-h1 { font-size: 30px !important; }
           .hero-sub { font-size: 14px !important; }
           .hero-ctas { flex-direction: column !important; }
