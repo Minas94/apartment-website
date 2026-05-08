@@ -127,7 +127,7 @@ const T = {
     findus: {
       title:"Find Us",
       sub:"Apartment L'Isola D'Oro, Grado (GO), Friuli Venezia Giulia, Italy.",
-      address:"Via [Street Name], 34073 Grado (GO)",
+      address:"Viale Italia 28, 34073 Grado (GO)",
       directions_title:"Getting Here",
       directions:[
         { how:"By Car",   text:"From Trieste: A4 motorway towards Venice, exit Palmanova, then follow signs to Grado (~1 hr). From Venice: A4 east, exit Latisana, follow signs to Grado (~1.5 hr). Parking available on the street (paid in summer)." },
@@ -233,7 +233,7 @@ const T = {
     findus: {
       title:"Dove Siamo",
       sub:"Appartamento L'Isola D'Oro, Grado (GO), Friuli Venezia Giulia, Italia.",
-      address:"Via [Nome Via], 34073 Grado (GO)",
+      address:"Viale Italia 28, 34073 Grado (GO)",
       directions_title:"Come Arrivare",
       directions:[
         { how:"In Auto",   text:"Da Trieste: autostrada A4 verso Venezia, uscita Palmanova, poi seguire le indicazioni per Grado (~1 ora). Da Venezia: A4 est, uscita Latisana (~1,5 ore). Parcheggio su strada (a pagamento in estate)." },
@@ -339,7 +339,7 @@ const T = {
     findus: {
       title:"Anreise",
       sub:"Apartment L'Isola D'Oro, Grado (GO), Friaul-Julisch Venetien, Italien.",
-      address:"Via [Straßenname], 34073 Grado (GO)",
+      address:"Viale Italia 28, 34073 Grado (GO)",
       directions_title:"So kommen Sie hin",
       directions:[
         { how:"Mit dem Auto",  text:"Von Triest: A4 Richtung Venedig, Ausfahrt Palmanova, dann Beschilderung nach Grado (~1 Std). Von Venedig: A4 Ost, Ausfahrt Latisana (~1,5 Std). Straßenparkplatz (im Sommer kostenpflichtig)." },
@@ -445,7 +445,7 @@ const T = {
     findus: {
       title:"Jak dojechać",
       sub:"Apartament L'Isola D'Oro, Grado (GO), Friuli Wenecja Julijska, Włochy.",
-      address:"Via [Nazwa ulicy], 34073 Grado (GO)",
+      address:"Viale Italia 28, 34073 Grado (GO)",
       directions_title:"Dojazd",
       directions:[
         { how:"Samochodem", text:"Z Triestu: autostrada A4 w kierunku Wenecji, zjazd Palmanova, następnie drogowskazy do Grado (~1 godz). Z Wenecji: A4 na wschód, zjazd Latisana (~1,5 godz). Parking uliczny (płatny latem)." },
@@ -551,7 +551,7 @@ const T = {
     findus: {
       title:"Kde nás nájdete",
       sub:"Apartmán L'Isola D'Oro, Grado (GO), Friuli Venezia Giulia, Taliansko.",
-      address:"Via [Názov ulice], 34073 Grado (GO)",
+      address:"Viale Italia 28, 34073 Grado (GO)",
       directions_title:"Ako sa dostať",
       directions:[
         { how:"Autom",      text:"Z Terstu: diaľnica A4 smer Benátky, výjazd Palmanova, potom smerovky na Grado (~1 hod). Z Benátok: A4 na východ, výjazd Latisana (~1,5 hod). Parkovanie na ulici (v lete spoplatnené)." },
@@ -657,7 +657,7 @@ const T = {
     findus: {
       title:"Megközelítés",
       sub:"L'Isola D'Oro Apartman, Grado (GO), Friuli Venezia Giulia, Olaszország.",
-      address:"Via [Utca neve], 34073 Grado (GO)",
+      address:"Viale Italia 28, 34073 Grado (GO)",
       directions_title:"Hogyan juthat ide",
       directions:[
         { how:"Autóval",    text:"Triesztből: A4 autópálya Velence felé, Palmanova lehajtó, majd Grado táblák követése (~1 óra). Velencéből: A4 keletre, Latisana lehajtó (~1,5 óra). Utcai parkolás (nyáron fizetős)." },
@@ -1217,15 +1217,17 @@ function FindUsPage({ t }) {
         <p style={{ fontSize:15, color:C.textMid, lineHeight:1.7, margin:"0 0 8px" }}>{h.sub}</p>
         <p style={{ fontSize:14, color:C.blue, fontWeight:600, margin:"0 0 36px" }}>{h.address}</p>
 
-        {/* Map placeholder */}
-        <div style={{ background:`${C.blue}15`, border:`1px solid ${C.border}`, borderRadius:12,
-          height:220, display:"flex", alignItems:"center", justifyContent:"center", marginBottom:36,
-          position:"relative", overflow:"hidden" }}>
-          <div style={{ textAlign:"center", color:C.textLight }}>
-            <div style={{ fontSize:32, marginBottom:8 }}>📍</div>
-            <div style={{ fontSize:13 }}>Grado, Friuli Venezia Giulia</div>
-            <div style={{ fontSize:12, marginTop:4 }}>34073 Grado (GO), Italy</div>
-          </div>
+        <div style={{ borderRadius:12, overflow:"hidden", marginBottom:36, border:`1px solid ${C.border}` }}>
+          <iframe
+            title="map"
+            width="100%"
+            height="300"
+            style={{ display:"block", border:0 }}
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps?q=Viale+Italia+28,+34073+Grado+GO,+Italy&output=embed"
+          />
         </div>
 
         <h2 style={{ fontSize:18, fontWeight:600, color:C.navy, margin:"0 0 16px" }}>{h.directions_title}</h2>
