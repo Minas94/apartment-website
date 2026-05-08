@@ -18,6 +18,10 @@ const C = {
   border:     "#c8dff0",
 };
 
+// Category colors indexed by position in h.categories: [All, Beach, Food&Drink, IceCream, Parks, Activities, Shopping, Services]
+const CAT_COLOR = ["#3B7FC4","#1589A0","#C2622A","#B0598A","#4A7C59","#B03A2E","#7B5EA7","#4A6F8A"];
+const CAT_PALE  = ["#eef5fc","#E8F6FA","#FBF0EB","#F9EDF5","#EDF4EF","#FBEEED","#F3EFF9","#EDF2F6"];
+
 const LANGS = [
   { code:"en", label:"EN", name:"English",    flag:"🇬🇧" },
   { code:"it", label:"IT", name:"Italiano",   flag:"🇮🇹" },
@@ -100,13 +104,13 @@ const T = {
         { cat:"Food & Drink", name:"Bistrot Ratatouille",    text:"In our opinion one of the best spots in Grado, just 1 minute from the apartment. Fresh food, good quality and very reasonably priced. Great for lunch or dinner.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
         { cat:"Food & Drink", name:"Mandracchio Bistrot",    text:"In the port area. Fresh food and good quality at a very reasonable price.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
         { cat:"Food & Drink", name:"Cardamomo",              text:"Upscale restaurant — ideal for an intimate dinner or a special occasion.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Food & Drink", name:"Tavernetta all'Androna", text:"A hidden gem tucked in a narrow alley of the old town. Elegant yet cozy, with a warm atmosphere and refined local cuisine — the perfect choice for a special evening.", map:"https://maps.app.goo.gl/4Ne5VEDhmT1ShBU8A" },
         { cat:"Food & Drink", name:"Là de le Vele",          text:"In the old town with a lovely view. A great setting for a relaxed meal.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
         { cat:"Food & Drink", name:"Il Panino",              text:"The go-to spot for fried calamari to take away. A perfect snack while strolling through town.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
         { cat:"Ice Cream",    name:"Antoniazzi Gelateria",   text:"The best gelato in Grado in our opinion — the only one we truly recommend. Expect a short queue, absolutely worth the wait.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
         { cat:"Parks",        name:"Parco delle Rose",       text:"The only park in the area, right on the path between the apartment and the old town. Lovely shade and calm — we always recommend walking through it.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
         { cat:"Activities",   name:"Kite Life",              text:"Kitesurfing school and equipment rental. Great whether you want to learn from scratch or just hire gear for the day.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
         { cat:"Activities",   name:"Terme Marine Di Grado",  text:"Heated seawater pools — including a rooftop pool — thermal baths, and spa. A genuine highlight of Grado, especially worth a visit in shoulder season.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
-        { cat:"Shopping",     name:"Mercato Coperto",        text:"Covered market with local fish, vegetables, and cheeses. Open mornings, closed Sunday." },
         { cat:"Shopping",     name:"Supermarket",            text:"The closest supermarket to the apartment.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
         { cat:"Services",     name:"Post Office & ATM",      text:"The closest post office and ATM to the apartment.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
         { cat:"Services",     name:"Pharmacy",               text:"The closest pharmacy to the apartment.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
@@ -120,6 +124,7 @@ const T = {
         { title:"Old Town (Città Vecchia)",  text:"The ancient heart of Grado: narrow cobblestone calli, the 6th-century Basilica di Santa Eufemia, and fishing boats in the small harbour. Perfect for an evening stroll." },
         { title:"The Lagoon",               text:"Grado sits on a sandbar surrounded by a shallow lagoon. Take a boat trip to the lagoon islands, spot herons and egrets, or join a traditional fishing tour." },
         { title:"The Beaches",              text:"Grado has some of the finest sandy beaches on the Adriatic — calm, shallow waters make them ideal for children. The main beach stretches for kilometres westward." },
+        { title:"Barbana",                  text:"A tiny island sanctuary in the Grado lagoon, reachable only by boat. Its Marian basilica dates back to the 7th century, making it one of the oldest pilgrimage sites in the Adriatic. A peaceful, quietly beautiful trip — boats leave regularly from the harbour." },
         { title:"Day Trips",                text:"Aquileia (10 min): UNESCO Roman ruins and the stunning basilica. Palmanova (35 min): a perfectly preserved Renaissance star-shaped fortress city and UNESCO World Heritage Site. Trieste (1 hr): Habsburg elegance, great coffee, and the Castello di Miramare. Venice (2 hr by car or boat bus)." },
         { title:"Seasonal Events",          text:"July–August: Grado in Fiore flower festival, evening markets in the old town. September: Bardìa, the traditional lagoon boat race. Winter: quiet season, excellent for birdwatching." },
       ],
@@ -206,13 +211,13 @@ const T = {
         { cat:"Cibo e Bevande", name:"Bistrot Ratatouille",    text:"Uno dei migliori posti di Grado secondo noi, a 1 minuto dall'appartamento. Cibo fresco, buona qualità e prezzi ragionevoli. Ottimo per pranzo e cena.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
         { cat:"Cibo e Bevande", name:"Mandracchio Bistrot",    text:"Nella zona del porto. Cibo fresco e buona qualità a un prezzo molto ragionevole.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
         { cat:"Cibo e Bevande", name:"Cardamomo",              text:"Ristorante raffinato — ideale per una cena intima o un'occasione speciale.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Cibo e Bevande", name:"Tavernetta all'Androna", text:"Un gioiello nascosto in un vicolo del centro storico. Elegante e accogliente, con un'atmosfera calda e cucina locale raffinata — la scelta perfetta per una serata speciale.", map:"https://maps.app.goo.gl/4Ne5VEDhmT1ShBU8A" },
         { cat:"Cibo e Bevande", name:"Là de le Vele",          text:"Nel centro storico con una bella vista. Un posto meraviglioso per un pasto tranquillo.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
         { cat:"Cibo e Bevande", name:"Il Panino",              text:"Il posto migliore per calamari fritti da asporto. Uno spuntino perfetto passeggiando per la città.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
         { cat:"Gelato",         name:"Antoniazzi Gelateria",   text:"Il miglior gelato di Grado secondo noi — l'unico che raccomandiamo davvero. Aspettatevi una piccola fila, ma ne vale assolutamente la pena.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
         { cat:"Parchi",         name:"Parco delle Rose",       text:"L'unico parco della zona, sul percorso tra l'appartamento e il centro storico. Tanto verde e ombra — lo consigliamo sempre per la passeggiata verso il centro.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
         { cat:"Attività",       name:"Kite Life",              text:"Scuola di kitesurf e noleggio attrezzatura. Perfetto sia per chi vuole imparare da zero sia per chi cerca l'attrezzatura per la giornata.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
         { cat:"Attività",       name:"Terme Marine Di Grado",  text:"Piscine di acqua di mare riscaldata — inclusa una piscina sul tetto — bagni termali e spa. Un'esperienza da non perdere a Grado, ideale anche in bassa stagione.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
-        { cat:"Shopping",       name:"Mercato Coperto",        text:"Mercato coperto con pesce locale, verdure e formaggi. Aperto la mattina, chiuso domenica." },
         { cat:"Shopping",       name:"Supermercato",           text:"Il supermercato più vicino all'appartamento.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
         { cat:"Servizi",        name:"Ufficio Postale & ATM",  text:"L'ufficio postale e il bancomat più vicini all'appartamento.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
         { cat:"Servizi",        name:"Farmacia",               text:"La farmacia più vicina all'appartamento.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
@@ -226,6 +231,7 @@ const T = {
         { title:"Centro Storico (Città Vecchia)", text:"Il cuore antico di Grado: calli acciottolate, la Basilica di Santa Eufemia del VI secolo e le barche dei pescatori nel piccolo porto. Perfetto per una passeggiata serale." },
         { title:"La Laguna",                      text:"Grado sorge su un banco di sabbia circondato da una laguna bassa. Gita in barca alle isole lagunari, avvistamento di aironi e garzette, o tour di pesca tradizionale." },
         { title:"Le Spiagge",                     text:"Grado vanta alcune delle più belle spiagge sabbiose dell'Adriatico — acque calme e basse, ideali per i bambini. La spiaggia principale si estende per chilometri verso ovest." },
+        { title:"Barbana",                         text:"Un piccolo santuario isolano nella laguna di Grado, raggiungibile solo in barca. La basilica mariana risale al VII secolo, rendendola uno dei luoghi di pellegrinaggio più antichi dell'Adriatico. Una gita tranquilla e di rara bellezza — i battelli partono regolarmente dal porto." },
         { title:"Gite",                           text:"Aquileia (10 min): rovine romane UNESCO e la straordinaria basilica. Palmanova (35 min): la più perfetta città fortezza rinascimentale a pianta stellare — Patrimonio UNESCO. Trieste (1 ora): eleganza asburgica e il Castello di Miramare. Venezia (2 ore in auto o barca-bus)." },
         { title:"Eventi Stagionali",              text:"Luglio–Agosto: Grado in Fiore, mercati serali nel centro storico. Settembre: Bardìa, la regata tradizionale della laguna. Inverno: stagione tranquilla, ottima per il birdwatching." },
       ],
@@ -312,13 +318,13 @@ const T = {
         { cat:"Essen & Trinken", name:"Bistrot Ratatouille",    text:"Unserer Meinung nach einer der besten Spots in Grado, 1 Minute von der Wohnung entfernt. Frisches Essen, gute Qualität und sehr vernünftiger Preis. Großartig für Mittag- und Abendessen.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
         { cat:"Essen & Trinken", name:"Mandracchio Bistrot",    text:"Im Hafenbereich. Frisches Essen und gute Qualität zu einem sehr vernünftigen Preis.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
         { cat:"Essen & Trinken", name:"Cardamomo",              text:"Gehobenes Restaurant — ideal für ein intimes Abendessen oder einen besonderen Anlass.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Essen & Trinken", name:"Tavernetta all'Androna", text:"Ein verstecktes Juwel in einer engen Gasse der Altstadt. Elegant und gemütlich, mit warmer Atmosphäre und raffinierter lokaler Küche — die perfekte Wahl für einen besonderen Abend.", map:"https://maps.app.goo.gl/4Ne5VEDhmT1ShBU8A" },
         { cat:"Essen & Trinken", name:"Là de le Vele",          text:"In der Altstadt mit schöner Aussicht. Ein wundervoller Ort für eine entspannte Mahlzeit.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
         { cat:"Essen & Trinken", name:"Il Panino",              text:"Die beste Adresse für gebratene Tintenfischringe zum Mitnehmen. Ein perfekter Snack beim Stadtbummel.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
         { cat:"Eis",             name:"Antoniazzi Gelateria",   text:"Unserer Meinung nach das beste Gelato in Grado — das einzige, das wir wirklich empfehlen. Kurze Warteschlange, aber absolut die Wartezeit wert.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
         { cat:"Parks",           name:"Parco delle Rose",      text:"Der einzige Park der Gegend, direkt auf dem Weg zwischen der Wohnung und der Altstadt. Viel Schatten und Ruhe — wir empfehlen immer, dort entlangzugehen.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
         { cat:"Aktivitäten",     name:"Kite Life",             text:"Kitesurfschule und Verleih. Ideal für Anfänger, die Unterricht suchen, sowie für erfahrene Fahrer, die Ausrüstung für den Tag mieten möchten.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
         { cat:"Aktivitäten",     name:"Terme Marine Di Grado", text:"Beheizte Meerwasserbecken — darunter ein Dachpool —, Thermalbäder und Spa. Ein echtes Highlight in Grado, besonders in der Nebensaison.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
-        { cat:"Shopping",        name:"Mercato Coperto",       text:"Überdachter Markt mit lokalem Fisch, Gemüse und Käse. Morgens, So geschlossen." },
         { cat:"Shopping",        name:"Supermarkt",            text:"Der nächste Supermarkt zur Wohnung.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
         { cat:"Services",        name:"Postamt & ATM",         text:"Das nächste Postamt und der nächste Geldautomat zur Wohnung.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
         { cat:"Services",        name:"Apotheke",              text:"Die nächste Apotheke zur Wohnung.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
@@ -332,6 +338,7 @@ const T = {
         { title:"Altstadt (Città Vecchia)",  text:"Das historische Herz von Grado: Kopfsteinpflaster-Gassen, die Basilika Santa Eufemia aus dem 6. Jahrhundert und Fischerboote im kleinen Hafen." },
         { title:"Die Lagune",               text:"Grado liegt auf einer Sandbank, umgeben von einer flachen Lagune. Bootstouren zu den Laguneninseln, Vogelbeobachtung oder traditionelle Fischereitouren." },
         { title:"Die Strände",             text:"Grado bietet einige der schönsten Sandstrände der Adria — ruhige, flache Gewässer, ideal für Kinder." },
+        { title:"Barbana",                text:"Ein kleines Inselheiligtum in der Grader Lagune, nur per Boot erreichbar. Die Marienwallfahrtskirche stammt aus dem 7. Jahrhundert und gehört zu den ältesten Pilgerorten der Adria. Ein ruhiger, schöner Ausflug — Boote fahren regelmäßig vom Hafen ab." },
         { title:"Ausflüge",               text:"Aquileia (10 Min): UNESCO-Römerruinen und beeindruckende Basilika. Palmanova (35 Min): perfekt erhaltene sternförmige Renaissancefestung — UNESCO-Welterbe. Triest (1 Std): habsburgische Eleganz, Schloss Miramare. Venedig (2 Std)." },
         { title:"Saisonale Events",       text:"Juli–Aug: Grado in Fiore Blumenfest. September: Bardìa Lagunensegel-Rennen. Winter: Ruhezeit, ideal für Vogelbeobachtung." },
       ],
@@ -418,13 +425,13 @@ const T = {
         { cat:"Jedzenie i napoje", name:"Bistrot Ratatouille",    text:"Naszym zdaniem jedno z najlepszych miejsc w Grado, 1 minuta od apartamentu. Świeże jedzenie, dobra jakość i bardzo przystępne ceny. Świetne na lunch lub kolację.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
         { cat:"Jedzenie i napoje", name:"Mandracchio Bistrot",    text:"W obszarze portowym. Świeże jedzenie i dobra jakość w bardzo rozsądnej cenie.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
         { cat:"Jedzenie i napoje", name:"Cardamomo",              text:"Ekskluzywna restauracja — idealna na romantyczną kolację lub wyjątkową okazję.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Jedzenie i napoje", name:"Tavernetta all'Androna", text:"Ukryty klejnot w wąskiej uliczce starego miasta. Elegancka, a zarazem przytulna, z ciepłą atmosferą i wyrafinowaną lokalną kuchnią — idealny wybór na wyjątkowy wieczór.", map:"https://maps.app.goo.gl/4Ne5VEDhmT1ShBU8A" },
         { cat:"Jedzenie i napoje", name:"Là de le Vele",          text:"W starym mieście z pięknym widokiem. Świetne miejsce na spokojny posiłek.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
         { cat:"Jedzenie i napoje", name:"Il Panino",              text:"Najlepsze miejsce na smażone kalmary na wynos. Idealna przekąska podczas spaceru po mieście.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
         { cat:"Lody",              name:"Antoniazzi Gelateria",   text:"Najlepsze gelato w Grado według nas — jedyne, które naprawdę polecamy. Spodziewaj się krótkiej kolejki — absolutnie warto.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
         { cat:"Parki",             name:"Parco delle Rose",      text:"Jedyny park w okolicy, na trasie między apartamentem a starym miastem. Mnóstwo cienia i spokoju — zawsze polecamy tędy przechodzić.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
         { cat:"Aktywności",        name:"Kite Life",             text:"Szkoła kitesurfingu i wypożyczalnia sprzętu. Idealne zarówno dla tych, którzy chcą się nauczyć, jak i dla doświadczonych, szukających sprzętu na dzień.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
         { cat:"Aktywności",        name:"Terme Marine Di Grado", text:"Podgrzewane baseny z wodą morską — w tym basen na dachu — kąpiele termalne i spa. Wyjątkowa atrakcja Grado, warta odwiedzenia szczególnie poza sezonem.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
-        { cat:"Zakupy",            name:"Mercato Coperto",       text:"Kryty rynek z lokalną rybą, warzywami i serami. Rano, nieczynny w niedzielę." },
         { cat:"Zakupy",            name:"Supermarket",           text:"Najbliższy supermarket od apartamentu.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
         { cat:"Usługi",            name:"Poczta & Bankomat",     text:"Najbliższy urząd pocztowy i bankomat od apartamentu.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
         { cat:"Usługi",            name:"Apteka",                text:"Najbliższa apteka od apartamentu.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
@@ -438,6 +445,7 @@ const T = {
         { title:"Stare miasto (Città Vecchia)", text:"Historyczne serce Grado: brukowane zaułki, bazylika Santa Eufemia z VI wieku i łodzie rybackie w małym porcie." },
         { title:"Laguna",                       text:"Grado leży na łasze piaszczystej otoczonej płytką laguną. Wycieczki łódką na wyspy lagunowe, obserwacja ptaków lub tradycyjne wyprawy rybackie." },
         { title:"Plaże",                        text:"Grado ma jedne z piękniejszych piaszczystych plaż na Adriatyku — spokojne, płytkie wody idealne dla dzieci." },
+        { title:"Barbana",                      text:"Mała wysepka-sanktuarium w lagunie Grado, dostępna wyłącznie łodzią. Mariańska bazylika pochodzi z VII wieku i należy do najstarszych miejsc pielgrzymkowych na Adriatyku. Spokojna, piękna wycieczka — łodzie odpływają regularnie z portu." },
         { title:"Wycieczki",                    text:"Akwileja (10 min): ruiny UNESCO i imponująca bazylika. Palmanova (35 min): doskonale zachowane renesansowe miasto-twierdza w kształcie gwiazdy — Dziedzictwo UNESCO. Triest (1 godz): elegancja habsburska, Zamek Miramare. Wenecja (2 godz)." },
         { title:"Imprezy sezonowe",             text:"Lipiec–sierpień: festiwal kwiatów Grado in Fiore. Wrzesień: Bardìa — tradycyjny wyścig łodzi lagunarnych. Zima: cisza, świetna dla ptaków." },
       ],
@@ -524,13 +532,13 @@ const T = {
         { cat:"Jedlo a nápoje", name:"Bistrot Ratatouille",    text:"Podľa nás jedno z najlepších miest v Grado, 1 minútu od apartmánu. Čerstvé jedlo, dobrá kvalita a veľmi rozumné ceny. Skvelé na obed aj večeru.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
         { cat:"Jedlo a nápoje", name:"Mandracchio Bistrot",    text:"V prístavnej oblasti. Čerstvé jedlo a dobrá kvalita za veľmi rozumnú cenu.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
         { cat:"Jedlo a nápoje", name:"Cardamomo",              text:"Luxusná reštaurácia — ideálna na romantickú večeru alebo špeciálnu príležitosť.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Jedlo a nápoje", name:"Tavernetta all'Androna", text:"Skrytý klenot v úzkej uličke starého mesta. Elegantná a útulná, s teplou atmosférou a rafinovanou miestnou kuchyňou — ideálna voľba pre špeciálny večer.", map:"https://maps.app.goo.gl/4Ne5VEDhmT1ShBU8A" },
         { cat:"Jedlo a nápoje", name:"Là de le Vele",          text:"V starom meste s krásnym výhľadom. Skvelé miesto na pokojné jedlo.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
         { cat:"Jedlo a nápoje", name:"Il Panino",              text:"Najlepšie miesto na vyprážané kalamáre so sebou. Dokonalý snack pri prechádzke mestom.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
         { cat:"Zmrzlina",       name:"Antoniazzi Gelateria",   text:"Podľa nás najlepšie gelato v Grado — jediné, ktoré skutočne odporúčame. Čakajte krátku frontu — úplne to stojí za to.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
         { cat:"Parky",          name:"Parco delle Rose",      text:"Jediný park v oblasti, priamo na ceste medzi apartmánom a starým mestom. Veľa tieňa a pokoja — vždy odporúčame prejsť tadiaľ.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
         { cat:"Aktivity",       name:"Kite Life",             text:"Škola kitesurfingu a požičovňa vybavenia. Skvelé pre začiatočníkov, ktorí chcú hodiny, aj pre skúsených, ktorí hľadajú vybavenie na deň.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
         { cat:"Aktivity",       name:"Terme Marine Di Grado", text:"Vyhrievané bazény s morskou vodou — vrátane strešného bazéna —, termálne kúpele a spa. Skutočný klenot Grado, výnimočne príjemné aj mimo hlavnej sezóny.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
-        { cat:"Nákupy",         name:"Mercato Coperto",       text:"Krytý trh s miestnou rybou, zeleninou a syrmi. Ráno, v nedeľu zatvorené." },
         { cat:"Nákupy",         name:"Supermarket",           text:"Najbližší supermarket k apartmánu.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
         { cat:"Služby",         name:"Pošta & Bankomat",      text:"Najbližšia pošta a bankomat k apartmánu.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
         { cat:"Služby",         name:"Lekáreň",               text:"Najbližšia lekáreň k apartmánu.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
@@ -544,6 +552,7 @@ const T = {
         { title:"Staré mesto (Città Vecchia)", text:"Historické srdce Grado: dlážd. uličky, bazilika Santa Eufemia zo 6. stor. a rybárske lode v malom prístave." },
         { title:"Lagúna",                      text:"Grado leží na piesočnom brehu obklopenom plytkými lagúnami. Plavby loďou na lagúnové ostrovy, pozorovanie vtákov alebo tradičné rybárske výlety." },
         { title:"Pláže",                       text:"Grado má jedny z najkrajších piesočných pláží na Jadrane — pokojné, plytké vody ideálne pre deti." },
+        { title:"Barbana",                     text:"Malý ostrovný svätyňa v lagúne Grado, dostupná len loďou. Mariánska bazilika pochádza zo 7. storočia a patrí k najstarším pútnickým miestam na Jadrane. Pokojný a krásny výlet — lode vyplávajú pravidelne z prístavu." },
         { title:"Výlety",                      text:"Aquileia (10 min): rímske ruiny UNESCO a úžasná bazilika. Palmanova (35 min): dokonale zachované renesančné hviezdicové opevnené mesto — UNESCO svetové dedičstvo. Terst (1 hod): habsburská elegancia, Hrad Miramare. Benátky (2 hod)." },
         { title:"Sezónne podujatia",           text:"Júl–aug: festival kvetov Grado in Fiore. September: Bardìa — tradičná lagúnová regata. Zima: ticho, skvelé na pozorovanie vtákov." },
       ],
@@ -630,13 +639,13 @@ const T = {
         { cat:"Étkezés és italok", name:"Bistrot Ratatouille",    text:"Véleményünk szerint Grado egyik legjobb helye, 1 percre az apartmantól. Friss étel, jó minőség és nagyon kedvező árak. Remek ebédre és vacsorára.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
         { cat:"Étkezés és italok", name:"Mandracchio Bistrot",    text:"A kikötői negyedben. Friss étel és jó minőség nagyon ésszerű áron.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
         { cat:"Étkezés és italok", name:"Cardamomo",              text:"Elegáns étterem — tökéletes romantikus vacsorára vagy különleges alkalomra.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Étkezés és italok", name:"Tavernetta all'Androna", text:"Rejtett kincs az óváros egy szűk sikátorában. Elegáns és meghitt, meleg hangulattal és kifinomult helyi konyhával — tökéletes választás egy különleges estére.", map:"https://maps.app.goo.gl/4Ne5VEDhmT1ShBU8A" },
         { cat:"Étkezés és italok", name:"Là de le Vele",          text:"Az óvárosban gyönyörű kilátással. Remek helyszín egy nyugodt étkezéshez.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
         { cat:"Étkezés és italok", name:"Il Panino",              text:"A legjobb hely sült kalamárihoz elvitelre. Tökéletes rágcsálnivaló városnézés közben.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
         { cat:"Fagylalt",          name:"Antoniazzi Gelateria",   text:"Véleményünk szerint a legjobb fagylalt Gradóban — az egyetlen, amelyet igazán ajánlunk. Számítson rövid sorban állásra — abszolút megéri.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
         { cat:"Parkok",            name:"Parco delle Rose",      text:"A környék egyetlen parkja, közvetlenül az apartman és az óváros közötti útvonalon. Rengeteg árnyék és nyugalom — mindig ajánljuk ezt az utat.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
         { cat:"Tevékenységek",     name:"Kite Life",             text:"Kiteszörfiskola és felszerelés-kölcsönző. Kezdőknek tanfolyamokhoz és tapasztalt lovasoknak napi bérléshez egyaránt ajánlott.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
         { cat:"Tevékenységek",     name:"Terme Marine Di Grado", text:"Fűtött tengervizes medencék — köztük egy tetőterasz-medence —, termálfürdők és spa. Grado egyik igazi különlegessége, főszezonon kívül is nagyon ajánlott.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
-        { cat:"Bevásárlás",        name:"Mercato Coperto",       text:"Fedett piac helyi hallal, zöldségekkel és sajtokkal. Reggel, vasárnap zárva." },
         { cat:"Bevásárlás",        name:"Szupermarket",          text:"Az apartmanhoz legközelebbi szupermarket.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
         { cat:"Szolgáltatások",    name:"Posta & ATM",           text:"Az apartmanhoz legközelebbi posta és bankjegykiadó.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
         { cat:"Szolgáltatások",    name:"Gyógyszertár",          text:"Az apartmanhoz legközelebbi gyógyszertár.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
@@ -650,6 +659,7 @@ const T = {
         { title:"Óváros (Città Vecchia)", text:"Grado történelmi szíve: macskakövek, a 6. századi Santa Eufemia bazilika és halászhajók a kis kikötőben." },
         { title:"A Lagúna",              text:"Grado egy sekély lagúna által körülvett homokpadra települt. Csónaktúrák a lagúnaszigetekre, madármegfigyelés vagy hagyományos halászkirándulás." },
         { title:"Strandok",              text:"Grado az Adriai-tenger egyik legszebb homokos strandjait kínálja — nyugodt, sekély vizek, gyerekeknek ideális." },
+        { title:"Barbana",               text:"Kis szigeti szentély a Gradói-lagúna közepén, csak hajóval megközelíthető. A Mária-bazilika a 7. századból származik, és az Adriai-tenger egyik legrégibb zarándokhelye. Csendes, különleges szépségű kirándulás — a kikötőből rendszeresen indulnak hajók." },
         { title:"Kirándulások",          text:"Aquileia (10 perc): UNESCO-s római romok és lenyűgöző bazilika. Palmanova (35 perc): tökéletesen megőrzött reneszánsz csillag alakú erődváros — UNESCO Világörökség. Trieszt (1 óra): Habsburg elegancia, Miramare kastély. Velence (2 óra)." },
         { title:"Szezonális programok",  text:"Július–augusztus: Grado in Fiore virágfesztivál. Szeptember: Bardìa — hagyományos lagúna-regatta. Tél: csend, kiváló madármegfigyelésre." },
       ],
@@ -1111,20 +1121,29 @@ function NeighborhoodPage({ t }) {
         {h.intro && <p style={{ fontSize:15, color:C.textMid, lineHeight:1.8, margin:"0 0 24px", maxWidth:720 }}>{h.intro}</p>}
         <p style={{ fontSize:13, color:C.blue, fontWeight:600, letterSpacing:"0.4px", margin:"0 0 20px", textTransform:"uppercase" }}>{h.sub}</p>
         <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:28 }}>
-          {h.categories.map((c,i) => (
-            <button key={i} onClick={() => setCat(i)} style={{
-              padding:"6px 16px", borderRadius:20, fontSize:12, cursor:"pointer", border:"1px solid",
-              borderColor: cat===i ? C.blue : C.border,
-              background: cat===i ? C.bluePale : C.white,
-              color: cat===i ? C.navy : C.textMid, fontWeight: cat===i ? 600 : 400,
-            }}>{c}</button>
-          ))}
+          {h.categories.map((c,i) => {
+            const col = CAT_COLOR[i] || CAT_COLOR[0];
+            const pale = CAT_PALE[i] || CAT_PALE[0];
+            return (
+              <button key={i} onClick={() => setCat(i)} style={{
+                padding:"6px 16px", borderRadius:20, fontSize:12, cursor:"pointer", border:"1px solid",
+                borderColor: cat===i ? col : C.border,
+                background: cat===i ? pale : C.white,
+                color: cat===i ? col : C.textMid, fontWeight: cat===i ? 600 : 400,
+              }}>{c}</button>
+            );
+          })}
         </div>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(260px,1fr))", gap:16 }}>
-          {filtered.map((p,i) => (
+          {filtered.map((p,i) => {
+            const ci = h.categories.indexOf(p.cat);
+            const cardCol = CAT_COLOR[ci] || CAT_COLOR[0];
+            const cardPale = CAT_PALE[ci] || CAT_PALE[0];
+            return (
             <div key={i} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:10, padding:"18px 20px" }}>
-              <div style={{ fontSize:11, fontWeight:600, color:C.blue, letterSpacing:"1px",
-                textTransform:"uppercase", marginBottom:6 }}>{p.cat}</div>
+              <div style={{ display:"inline-block", fontSize:10, fontWeight:700, color:cardCol,
+                letterSpacing:"0.9px", textTransform:"uppercase", marginBottom:8,
+                background:cardPale, borderRadius:20, padding:"2px 9px" }}>{p.cat}</div>
               <div style={{ fontSize:14, fontWeight:700, color:C.navy, marginBottom:6 }}>{p.name}</div>
               <div style={{ fontSize:13, color:C.textMid, lineHeight:1.6 }}>{p.text}</div>
               {p.map && (
@@ -1137,7 +1156,8 @@ function NeighborhoodPage({ t }) {
                 </a>
               )}
             </div>
-          ))}
+          );
+          })}
         </div>
         {h.disclaimer && (
           <p style={{ marginTop:40, fontSize:12, color:C.textLight, lineHeight:1.7,
@@ -1154,9 +1174,10 @@ const GRADO_PHOTOS = {
   0: ["/photos/grado/old_town/0B1103337927.jpg", "/photos/grado/old_town/20031922.jpg"],
   1: ["/photos/grado/lagoon/grado_laguna_barbana_al_tramonto_tgonshq.jpg"],
   2: ["/photos/grado/beaches/Grado.jpg"],
-  3: ["/photos/grado/day_trips/aerial_aquileia_basilica.jpg", "/photos/grado/day_trips/miramare.jpg", "/photos/grado/day_trips/cop5.jpg"],
+  3: ["/photos/grado/barbana/insel-barbana-grado-123rf-75629475_700.jpg"],
+  4: ["/photos/grado/day_trips/aerial_aquileia_basilica.jpg", "/photos/grado/day_trips/miramare.jpg", "/photos/grado/day_trips/cop5.jpg"],
 };
-const SECTION_COLORS = [C.yellow, C.blue, "#6B8F71", C.navy, C.navy];
+const SECTION_COLORS = [C.yellow, C.blue, "#6B8F71", "#5B8FA8", C.navy, C.navy];
 
 function GradoPage({ t }) {
   const h = t.grado;
