@@ -857,7 +857,7 @@ function HomePage({ t, setPage }) {
               <button onClick={() => setPage("guide")} style={{
                 background:"none", color:C.white, border:`1.5px solid ${C.white}66`,
                 borderRadius:6, padding:"12px 24px", fontSize:14, cursor:"pointer" }}>{h.cta_guide}</button>
-              <a href="https://booking.com" target="_blank" rel="noreferrer" style={{
+              <a href="https://www.booking.com/hotel/it/appartamento-l-isola-d-oro.html" target="_blank" rel="noreferrer" style={{
                 background:"none", color:C.yellow, border:`1.5px solid ${C.yellow}66`,
                 borderRadius:6, padding:"12px 24px", fontSize:14, textDecoration:"none", display:"inline-flex", alignItems:"center" }}>{h.book}</a>
             </div>
@@ -1264,7 +1264,7 @@ function FindUsPage({ t }) {
         <div style={{ background:C.navy, borderRadius:12, padding:"28px", textAlign:"center" }}>
           <div style={{ fontSize:20, fontWeight:700, color:C.white, marginBottom:8, fontFamily:"Georgia, serif", fontStyle:"italic" }}>{h.book_title}</div>
           <div style={{ fontSize:14, color:C.blueLight, marginBottom:20 }}>{h.book_text}</div>
-          <a href="https://booking.com" target="_blank" rel="noreferrer" style={{
+          <a href="https://www.booking.com/hotel/it/appartamento-l-isola-d-oro.html" target="_blank" rel="noreferrer" style={{
             display:"inline-block", background:C.yellow, color:C.navy, fontWeight:700,
             padding:"12px 28px", borderRadius:6, textDecoration:"none", fontSize:14 }}>{h.book_cta}</a>
         </div>
