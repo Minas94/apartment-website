@@ -676,7 +676,7 @@ function BeachScene() {
   const n = C.navy;
   const y = C.yellow;
   return (
-    <svg viewBox="0 0 1200 180" preserveAspectRatio="none"
+    <svg viewBox="0 0 1200 180" preserveAspectRatio="xMidYMax slice"
       style={{ display:"block", width:"100%", height:150 }}>
 
       {/* wave / cream transition */}
@@ -724,13 +724,13 @@ function BeachScene() {
 function Nav({ page, setPage, lang, setLang, t, showLangMenu, setShowLangMenu }) {
   return (
     <nav style={{ background:C.navy, position:"sticky", top:0, zIndex:100, boxShadow:"0 2px 12px rgba(0,0,0,0.2)" }}>
-      <div style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", height:56, gap:8 }}>
-        <button onClick={() => setPage("home")} style={{ background:"none", border:"none", cursor:"pointer",
+      <div className="nav-inner" style={{ maxWidth:1100, margin:"0 auto", padding:"0 24px", display:"flex", alignItems:"center", minHeight:56, gap:8 }}>
+        <button className="nav-brand" onClick={() => setPage("home")} style={{ background:"none", border:"none", cursor:"pointer",
           fontFamily:"Georgia, serif", fontSize:16, fontWeight:700, color:C.white,
           fontStyle:"italic", letterSpacing:"0.3px", padding:0, marginRight:16, flexShrink:0 }}>
           L'Isola D'Oro
         </button>
-        <div style={{ display:"flex", gap:2, flex:1, flexWrap:"wrap" }}>
+        <div className="nav-links" style={{ display:"flex", gap:2, flex:1, flexWrap:"wrap" }}>
           {Object.entries(t.nav).map(([key, label]) => (
             <button key={key} onClick={() => setPage(key)} style={{
               background: page === key ? `${C.yellow}22` : "none",
@@ -781,12 +781,12 @@ function HomePage({ t, setPage }) {
             <div style={{ display:"inline-block", background:`${C.yellow}33`, color:C.yellow,
               fontSize:11, fontWeight:700, letterSpacing:"2px", textTransform:"uppercase",
               padding:"4px 12px", borderRadius:4, marginBottom:20 }}>{h.badge}</div>
-            <h1 style={{ fontFamily:"Georgia, serif", fontSize:48, fontWeight:700, color:C.white,
+            <h1 className="hero-h1" style={{ fontFamily:"Georgia, serif", fontSize:48, fontWeight:700, color:C.white,
               lineHeight:1.1, margin:"0 0 16px", fontStyle:"italic" }}>
               {h.title.split("\n").map((l,i) => <span key={i}>{l}{i===0 && <br/>}</span>)}
             </h1>
-            <p style={{ fontSize:16, color:C.blueLight, lineHeight:1.7, maxWidth:480, margin:"0 0 28px" }}>{h.sub}</p>
-            <div style={{ display:"flex", gap:12, flexWrap:"wrap" }}>
+            <p className="hero-sub" style={{ fontSize:16, color:C.blueLight, lineHeight:1.7, maxWidth:480, margin:"0 0 28px" }}>{h.sub}</p>
+            <div className="hero-ctas" style={{ display:"flex", gap:12, flexWrap:"wrap" }}>
               <button onClick={() => setPage("house")} style={{
                 background:C.yellow, color:C.navy, border:"none", borderRadius:6,
                 padding:"12px 24px", fontSize:14, fontWeight:700, cursor:"pointer" }}>{h.cta_house}</button>
@@ -1192,7 +1192,21 @@ export default function App() {
   return (
     <div style={{ minHeight:"100vh", background:C.cream, fontFamily:"system-ui, sans-serif" }}
       onClick={() => showLangMenu && setShowLangMenu(false)}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap'); * { box-sizing: border-box; margin: 0; }`}</style>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+        * { box-sizing: border-box; margin: 0; }
+        @media (max-width: 640px) {
+          .nav-inner { flex-wrap: wrap !important; height: auto !important; padding: 8px 12px 0 !important; gap: 4px !important; }
+          .nav-brand { flex: 1 !important; margin-right: 0 !important; }
+          .nav-links { order: 3; width: 100%; flex-wrap: nowrap !important; overflow-x: auto; scrollbar-width: none; padding: 4px 0 8px; gap: 0 !important; }
+          .nav-links::-webkit-scrollbar { display: none; }
+          .nav-links button { white-space: nowrap; font-size: 11px !important; padding: 5px 8px !important; }
+          .hero-h1 { font-size: 30px !important; }
+          .hero-sub { font-size: 14px !important; }
+          .hero-ctas { flex-direction: column !important; }
+          .hero-ctas button, .hero-ctas a { width: 100% !important; text-align: center; justify-content: center; }
+        }
+      `}</style>
       <Nav page={page} setPage={setPage} lang={lang} setLang={setLang} t={t}
         showLangMenu={showLangMenu} setShowLangMenu={(v) => { v ? setShowLangMenu(true) : setShowLangMenu(false); }} />
       <PageComponent t={t} setPage={setPage} />
