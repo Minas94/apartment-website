@@ -87,6 +87,7 @@ const T = {
     neighborhood: {
       title:"Local Guide",
       sub:"Our favourite spots around the apartment — handpicked recommendations from people who know Grado.",
+      disclaimer:"We have no affiliation with any of the businesses listed here and receive no compensation for these mentions. These are simply the places we genuinely visit when in Grado.",
       intro:"The apartment sits at the gateway to Grado's Città Giardino — a peaceful residential district, just a short walk from both the beach and the old town, without being in the middle of the summer chaos. The only park in the area, Parco delle Rose, lies right between the apartment and the city centre: a shaded, pleasant path we highly recommend for the stroll into town.",
       categories:["All","Beach","Food & Drink","Ice Cream","Parks","Activities","Shopping","Services"],
       places:[
@@ -114,11 +115,12 @@ const T = {
     grado: {
       title:"Grado",
       sub:"Ancient island city on the Adriatic lagoon — known as the 'Island of the Sun'. Roman heritage, golden beaches, and a living fishing tradition.",
+      eventsLink:"Full events calendar →",
       sections:[
         { title:"Old Town (Città Vecchia)",  text:"The ancient heart of Grado: narrow cobblestone calli, the 6th-century Basilica di Santa Eufemia, and fishing boats in the small harbour. Perfect for an evening stroll." },
         { title:"The Lagoon",               text:"Grado sits on a sandbar surrounded by a shallow lagoon. Take a boat trip to the lagoon islands, spot herons and egrets, or join a traditional fishing tour." },
         { title:"The Beaches",              text:"Grado has some of the finest sandy beaches on the Adriatic — calm, shallow waters make them ideal for children. The main beach stretches for kilometres westward." },
-        { title:"Day Trips",                text:"Aquileia (10 min): UNESCO Roman ruins and the stunning basilica. Trieste (1 hr): Habsburg elegance, great coffee, and the Castello di Miramare. Venice (2 hr by car or boat bus)." },
+        { title:"Day Trips",                text:"Aquileia (10 min): UNESCO Roman ruins and the stunning basilica. Palmanova (35 min): a perfectly preserved Renaissance star-shaped fortress city and UNESCO World Heritage Site. Trieste (1 hr): Habsburg elegance, great coffee, and the Castello di Miramare. Venice (2 hr by car or boat bus)." },
         { title:"Seasonal Events",          text:"July–August: Grado in Fiore flower festival, evening markets in the old town. September: Bardìa, the traditional lagoon boat race. Winter: quiet season, excellent for birdwatching." },
       ],
     },
@@ -191,6 +193,7 @@ const T = {
     neighborhood: {
       title:"Guida Locale",
       sub:"I nostri posti preferiti — selezione curata di chi conosce Grado.",
+      disclaimer:"Non siamo affiliati ad alcuna delle attività elencate e non riceviamo alcun compenso per queste menzioni. Sono semplicemente i posti che frequentiamo davvero quando siamo a Grado.",
       intro:"L'appartamento si trova all'ingresso della Città Giardino di Grado — un quartiere residenziale tranquillo, a pochi passi dalla spiaggia e dal centro storico, lontano dal caos estivo. L'unico parco della zona, il Parco delle Rose, si trova proprio tra l'appartamento e il centro: un percorso ombreggiato e rilassante che consigliamo vivamente per la passeggiata verso il centro.",
       categories:["Tutti","Spiaggia","Cibo e Bevande","Gelato","Parchi","Attività","Shopping","Servizi"],
       places:[
@@ -218,11 +221,12 @@ const T = {
     grado: {
       title:"Grado",
       sub:"Antica città insulare sull'Adriatico — chiamata 'L'Isola del Sole'. Patrimonio romano, spiagge dorate e tradizione marinara.",
+      eventsLink:"Calendario eventi completo →",
       sections:[
         { title:"Centro Storico (Città Vecchia)", text:"Il cuore antico di Grado: calli acciottolate, la Basilica di Santa Eufemia del VI secolo e le barche dei pescatori nel piccolo porto. Perfetto per una passeggiata serale." },
         { title:"La Laguna",                      text:"Grado sorge su un banco di sabbia circondato da una laguna bassa. Gita in barca alle isole lagunari, avvistamento di aironi e garzette, o tour di pesca tradizionale." },
         { title:"Le Spiagge",                     text:"Grado vanta alcune delle più belle spiagge sabbiose dell'Adriatico — acque calme e basse, ideali per i bambini. La spiaggia principale si estende per chilometri verso ovest." },
-        { title:"Gite",                           text:"Aquileia (10 min): rovine romane UNESCO e la straordinaria basilica. Trieste (1 ora): eleganza asburgica e il Castello di Miramare. Venezia (2 ore in auto o barca-bus)." },
+        { title:"Gite",                           text:"Aquileia (10 min): rovine romane UNESCO e la straordinaria basilica. Palmanova (35 min): la più perfetta città fortezza rinascimentale a pianta stellare — Patrimonio UNESCO. Trieste (1 ora): eleganza asburgica e il Castello di Miramare. Venezia (2 ore in auto o barca-bus)." },
         { title:"Eventi Stagionali",              text:"Luglio–Agosto: Grado in Fiore, mercati serali nel centro storico. Settembre: Bardìa, la regata tradizionale della laguna. Inverno: stagione tranquilla, ottima per il birdwatching." },
       ],
     },
@@ -295,6 +299,7 @@ const T = {
     neighborhood: {
       title:"Lokaler Guide",
       sub:"Unsere Lieblingsplätze rund um die Wohnung.",
+      disclaimer:"Wir haben keinerlei Verbindung zu den hier aufgeführten Betrieben und erhalten keine Vergütung für diese Erwähnungen. Es sind schlicht die Orte, die wir selbst besuchen, wenn wir in Grado sind.",
       intro:"Die Wohnung liegt am Eingang zur Città Giardino von Grado — einem ruhigen Wohnviertel, nur wenige Gehminuten vom Strand und der Altstadt entfernt, aber weit genug vom Sommertreiben. Der einzige Park der Gegend, der Parco delle Rose, liegt genau zwischen der Wohnung und dem Stadtzentrum: ein schattiger, angenehmer Weg, den wir für den Spaziergang ins Zentrum sehr empfehlen.",
       categories:["Alle","Strand","Essen & Trinken","Eis","Parks","Aktivitäten","Shopping","Services"],
       places:[
@@ -322,11 +327,12 @@ const T = {
     grado: {
       title:"Grado",
       sub:"Antike Inselstadt an der Adria-Lagune — bekannt als 'Insel der Sonne'.",
+      eventsLink:"Vollständiger Veranstaltungskalender →",
       sections:[
         { title:"Altstadt (Città Vecchia)",  text:"Das historische Herz von Grado: Kopfsteinpflaster-Gassen, die Basilika Santa Eufemia aus dem 6. Jahrhundert und Fischerboote im kleinen Hafen." },
         { title:"Die Lagune",               text:"Grado liegt auf einer Sandbank, umgeben von einer flachen Lagune. Bootstouren zu den Laguneninseln, Vogelbeobachtung oder traditionelle Fischereitouren." },
         { title:"Die Strände",             text:"Grado bietet einige der schönsten Sandstrände der Adria — ruhige, flache Gewässer, ideal für Kinder." },
-        { title:"Ausflüge",               text:"Aquileia (10 Min): UNESCO-Römerruinen. Triest (1 Std): habsburgische Eleganz, Schloss Miramare. Venedig (2 Std)." },
+        { title:"Ausflüge",               text:"Aquileia (10 Min): UNESCO-Römerruinen und beeindruckende Basilika. Palmanova (35 Min): perfekt erhaltene sternförmige Renaissancefestung — UNESCO-Welterbe. Triest (1 Std): habsburgische Eleganz, Schloss Miramare. Venedig (2 Std)." },
         { title:"Saisonale Events",       text:"Juli–Aug: Grado in Fiore Blumenfest. September: Bardìa Lagunensegel-Rennen. Winter: Ruhezeit, ideal für Vogelbeobachtung." },
       ],
     },
@@ -399,6 +405,7 @@ const T = {
     neighborhood: {
       title:"Lokalny Przewodnik",
       sub:"Nasze ulubione miejsca w okolicy apartamentu.",
+      disclaimer:"Nie jesteśmy powiązani z żadnym z wymienionych tu miejsc i nie otrzymujemy żadnego wynagrodzenia za te wzmianki. To po prostu miejsca, które sami odwiedzamy, będąc w Grado.",
       intro:"Apartament stoi u bram Città Giardino w Grado — spokojnej dzielnicy mieszkaniowej, zaledwie kilka minut spacerem od plaży i centrum, z dala od letniego zgiełku. Jedyny park w okolicy, Parco delle Rose, leży dokładnie na trasie między apartamentem a starym miastem: zacieniona, przyjemna ścieżka, którą gorąco polecamy na spacer do centrum.",
       categories:["Wszystkie","Plaża","Jedzenie i napoje","Lody","Parki","Aktywności","Zakupy","Usługi"],
       places:[
@@ -426,11 +433,12 @@ const T = {
     grado: {
       title:"Grado",
       sub:"Starożytne miasto wyspiarskie nad Adriatykiem — znane jako 'Wyspa Słońca'.",
+      eventsLink:"Pełny kalendarz wydarzeń →",
       sections:[
         { title:"Stare miasto (Città Vecchia)", text:"Historyczne serce Grado: brukowane zaułki, bazylika Santa Eufemia z VI wieku i łodzie rybackie w małym porcie." },
         { title:"Laguna",                       text:"Grado leży na łasze piaszczystej otoczonej płytką laguną. Wycieczki łódką na wyspy lagunowe, obserwacja ptaków lub tradycyjne wyprawy rybackie." },
         { title:"Plaże",                        text:"Grado ma jedne z piękniejszych piaszczystych plaż na Adriatyku — spokojne, płytkie wody idealne dla dzieci." },
-        { title:"Wycieczki",                    text:"Akwileja (10 min): ruiny UNESCO. Triest (1 godz): elegancja habsburska, Zamek Miramare. Wenecja (2 godz)." },
+        { title:"Wycieczki",                    text:"Akwileja (10 min): ruiny UNESCO i imponująca bazylika. Palmanova (35 min): doskonale zachowane renesansowe miasto-twierdza w kształcie gwiazdy — Dziedzictwo UNESCO. Triest (1 godz): elegancja habsburska, Zamek Miramare. Wenecja (2 godz)." },
         { title:"Imprezy sezonowe",             text:"Lipiec–sierpień: festiwal kwiatów Grado in Fiore. Wrzesień: Bardìa — tradycyjny wyścig łodzi lagunarnych. Zima: cisza, świetna dla ptaków." },
       ],
     },
@@ -503,6 +511,7 @@ const T = {
     neighborhood: {
       title:"Lokálny Sprievodca",
       sub:"Naše obľúbené miesta v okolí apartmánu.",
+      disclaimer:"Nie sme nijako prepojení so žiadnym z tu uvedených podnikov a nedostávame za tieto zmienky žiadnu odmenu. Sú to jednoducho miesta, ktoré sami navštevujeme, keď sme v Grado.",
       intro:"Apartmán stojí na vstupe do Città Giardino v Grado — tichej obytnej štvrte, len niekoľko minút chôdze od pláže a centra, ďaleko od letného ruchu. Jediný park v oblasti, Parco delle Rose, leží priamo na ceste medzi apartmánom a starým mestom: tienistá, príjemná trasa, ktorú vždy odporúčame na prechádzku do centra.",
       categories:["Všetky","Pláž","Jedlo a nápoje","Zmrzlina","Parky","Aktivity","Nákupy","Služby"],
       places:[
@@ -530,11 +539,12 @@ const T = {
     grado: {
       title:"Grado",
       sub:"Starobylé ostrovné mesto na Jadranskej lagúne — známe ako 'Ostrov slnka'.",
+      eventsLink:"Kompletný kalendár podujatí →",
       sections:[
         { title:"Staré mesto (Città Vecchia)", text:"Historické srdce Grado: dlážd. uličky, bazilika Santa Eufemia zo 6. stor. a rybárske lode v malom prístave." },
         { title:"Lagúna",                      text:"Grado leží na piesočnom brehu obklopenom plytkými lagúnami. Plavby loďou na lagúnové ostrovy, pozorovanie vtákov alebo tradičné rybárske výlety." },
         { title:"Pláže",                       text:"Grado má jedny z najkrajších piesočných pláží na Jadrane — pokojné, plytké vody ideálne pre deti." },
-        { title:"Výlety",                      text:"Aquileia (10 min): rímske ruiny UNESCO. Terst (1 hod): habsburská elegancia, Hrad Miramare. Benátky (2 hod)." },
+        { title:"Výlety",                      text:"Aquileia (10 min): rímske ruiny UNESCO a úžasná bazilika. Palmanova (35 min): dokonale zachované renesančné hviezdicové opevnené mesto — UNESCO svetové dedičstvo. Terst (1 hod): habsburská elegancia, Hrad Miramare. Benátky (2 hod)." },
         { title:"Sezónne podujatia",           text:"Júl–aug: festival kvetov Grado in Fiore. September: Bardìa — tradičná lagúnová regata. Zima: ticho, skvelé na pozorovanie vtákov." },
       ],
     },
@@ -607,6 +617,7 @@ const T = {
     neighborhood: {
       title:"Helyi Kalauz",
       sub:"Kedvenc helyeink az apartman körül.",
+      disclaimer:"Semmilyen kapcsolatban nem állunk az itt felsorolt vállalkozásokkal, és nem kapunk ellentételezést ezekért az ajánlásokért. Ezek egyszerűen azok a helyek, amelyeket mi magunk látogatunk, amikor Gradóban vagyunk.",
       intro:"Az apartman Grado Città Giardino negyedének kapujában áll — egy csendes lakónegyedben, mindössze néhány perces sétára a strandtól és a belvárostól, mégis messze a nyári forgatag zajától. A környék egyetlen parkja, a Parco delle Rose, pontosan az apartman és az óváros között helyezkedik el: árnyékos, kellemes sétaút, amelyet mindig ajánlunk a városközpontba vezető séta alkalmával.",
       categories:["Összes","Strand","Étkezés és italok","Fagylalt","Parkok","Tevékenységek","Bevásárlás","Szolgáltatások"],
       places:[
@@ -634,11 +645,12 @@ const T = {
     grado: {
       title:"Grado",
       sub:"Ókori szigetváros az Adriai lagúnán — 'A Nap Szigete' névvel is ismert.",
+      eventsLink:"Teljes eseménynaptár →",
       sections:[
         { title:"Óváros (Città Vecchia)", text:"Grado történelmi szíve: macskakövek, a 6. századi Santa Eufemia bazilika és halászhajók a kis kikötőben." },
         { title:"A Lagúna",              text:"Grado egy sekély lagúna által körülvett homokpadra települt. Csónaktúrák a lagúnaszigetekre, madármegfigyelés vagy hagyományos halászkirándulás." },
         { title:"Strandok",              text:"Grado az Adriai-tenger egyik legszebb homokos strandjait kínálja — nyugodt, sekély vizek, gyerekeknek ideális." },
-        { title:"Kirándulások",          text:"Aquileia (10 perc): UNESCO-s római romok. Trieszt (1 óra): Habsburg elegancia, Miramare kastély. Velence (2 óra)." },
+        { title:"Kirándulások",          text:"Aquileia (10 perc): UNESCO-s római romok és lenyűgöző bazilika. Palmanova (35 perc): tökéletesen megőrzött reneszánsz csillag alakú erődváros — UNESCO Világörökség. Trieszt (1 óra): Habsburg elegancia, Miramare kastély. Velence (2 óra)." },
         { title:"Szezonális programok",  text:"Július–augusztus: Grado in Fiore virágfesztivál. Szeptember: Bardìa — hagyományos lagúna-regatta. Tél: csend, kiváló madármegfigyelésre." },
       ],
     },
@@ -1127,30 +1139,68 @@ function NeighborhoodPage({ t }) {
             </div>
           ))}
         </div>
+        {h.disclaimer && (
+          <p style={{ marginTop:40, fontSize:12, color:C.textLight, lineHeight:1.7,
+            fontStyle:"italic", borderTop:`1px solid ${C.border}`, paddingTop:20, maxWidth:720 }}>
+            {h.disclaimer}
+          </p>
+        )}
       </div>
     </div>
   );
 }
 
+const GRADO_PHOTOS = {
+  0: ["/photos/grado/old_town/0B1103337927.jpg", "/photos/grado/old_town/20031922.jpg"],
+  1: ["/photos/grado/lagoon/grado_laguna_barbana_al_tramonto_tgonshq.jpg"],
+  2: ["/photos/grado/beaches/Grado.jpg"],
+  3: ["/photos/grado/day_trips/aerial_aquileia_basilica.jpg", "/photos/grado/day_trips/miramare.jpg", "/photos/grado/day_trips/cop5.jpg"],
+};
+const SECTION_COLORS = [C.yellow, C.blue, "#6B8F71", C.navy, C.navy];
+
 function GradoPage({ t }) {
   const h = t.grado;
   return (
     <div style={{ background:C.cream, minHeight:"60vh", padding:"48px 0 64px" }}>
-      <div style={{ maxWidth:800, margin:"0 auto", padding:"0 24px" }}>
+      <div style={{ maxWidth:860, margin:"0 auto", padding:"0 24px" }}>
         <div style={{ width:40, height:4, background:C.yellow, borderRadius:2, marginBottom:16 }} />
         <h1 style={{ fontFamily:"Georgia, serif", fontSize:36, color:C.navy, margin:"0 0 12px", fontStyle:"italic" }}>{h.title}</h1>
-        <p style={{ fontSize:15, color:C.textMid, lineHeight:1.7, margin:"0 0 40px" }}>{h.sub}</p>
-        <div style={{ display:"flex", flexDirection:"column", gap:24 }}>
-          {h.sections.map((s,i) => (
-            <div key={i} style={{ display:"flex", gap:20 }}>
-              <div style={{ width:4, background: i===0 ? C.yellow : i===1 ? C.blue : i===2 ? "#6B8F71" : C.navy,
-                borderRadius:2, flexShrink:0, minHeight:60 }} />
-              <div>
-                <div style={{ fontSize:16, fontWeight:700, color:C.navy, marginBottom:8, fontFamily:"Georgia, serif" }}>{s.title}</div>
-                <div style={{ fontSize:14, color:C.textMid, lineHeight:1.7 }}>{s.text}</div>
+        <p style={{ fontSize:15, color:C.textMid, lineHeight:1.7, margin:"0 0 32px" }}>{h.sub}</p>
+        <div style={{ display:"flex", flexDirection:"column", gap:16 }}>
+          {h.sections.map((s, i) => {
+            const photos = GRADO_PHOTOS[i];
+            const isEvents = i === h.sections.length - 1;
+            const color = SECTION_COLORS[i] || C.navy;
+            const flip = photos && i % 2 !== 0;
+            return (
+              <div key={i} className="grado-card" style={{
+                background:C.white, border:`1px solid ${C.border}`, borderRadius:12,
+                overflow:"hidden", display:"flex", flexDirection: flip ? "row-reverse" : "row",
+                boxShadow:"0 1px 6px rgba(0,0,0,0.05)",
+              }}>
+                {photos
+                  ? <div className="grado-card-img" style={{ width:260, flexShrink:0 }}>
+                      <img src={photos[0]} alt={s.title}
+                        style={{ width:"100%", height:"100%", objectFit:"cover", display:"block" }} />
+                    </div>
+                  : <div style={{ width:4, flexShrink:0, background:color, borderRadius:"12px 0 0 12px" }} />
+                }
+                <div style={{ flex:1, padding:"24px 28px", minWidth:0 }}>
+                  <div style={{ width:28, height:3, background:color, borderRadius:2, marginBottom:12 }} />
+                  <div style={{ fontSize:16, fontWeight:700, color:C.navy, marginBottom:8, fontFamily:"Georgia, serif" }}>{s.title}</div>
+                  <div style={{ fontSize:14, color:C.textMid, lineHeight:1.75 }}>{s.text}</div>
+                  {isEvents && (
+                    <a href="https://grado.it/en/events-and-tours" target="_blank" rel="noopener noreferrer"
+                      style={{ display:"inline-flex", alignItems:"center", gap:6, marginTop:14,
+                        fontSize:12, fontWeight:600, color:C.blue, textDecoration:"none",
+                        border:`1px solid ${C.border}`, borderRadius:20, padding:"5px 14px" }}>
+                      🗓 {h.eventsLink}
+                    </a>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </div>
@@ -1239,6 +1289,12 @@ export default function App() {
         * { box-sizing: border-box; margin: 0; }
         .nav-desktop { display: flex; }
         .nav-hamburger { display: none; }
+        .grado-card-img { min-height: 180px; }
+        @media (max-width: 680px) {
+          .grado-card { flex-direction: column !important; }
+          .grado-card-img { width: 100% !important; height: 200px; min-height: unset; }
+          .grado-card-img img { height: 200px; }
+        }
         @media (max-width: 680px) {
           .nav-desktop { display: none !important; }
           .nav-hamburger { display: block !important; }
