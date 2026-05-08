@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const C = {
   navy:       "#1a3a5c",
@@ -29,7 +29,7 @@ const LANGS = [
 
 const T = {
   en: {
-    nav: { home:"Home", house:"The Apartment", guide:"Guest Guide", neighborhood:"Neighborhood", grado:"Grado", findus:"Find Us" },
+    nav: { home:"Home", house:"The Apartment", guide:"Guest Guide", neighborhood:"Local Guide", grado:"Grado", findus:"Find Us" },
     home: {
       badge:"Grado · Friuli Venezia Giulia",
       title:"Apartment\nL'Isola D'Oro",
@@ -41,7 +41,7 @@ const T = {
       cards:[
         { title:"The Apartment", text:"Two bedrooms, a fully equipped kitchen, and spaces full of character — vintage tiles, original artwork, colourful details." },
         { title:"Guest Guide", text:"Everything you need to know: check-in, the grill, TV remotes, appliances, and house rules — all in one place." },
-        { title:"The Neighborhood", text:"Our favourite beaches, restaurants, bars, and shops — curated picks from people who know Grado well." },
+        { title:"Local Guide", text:"Our favourite beaches, restaurants, bars, and shops — curated picks from people who know Grado well." },
         { title:"Grado", text:"The old town, the lagoon, the beaches. Day trips to Trieste and Aquileia. Seasonal events and local tips." },
       ],
     },
@@ -50,19 +50,23 @@ const T = {
       sub:"Two bedrooms, a fully equipped kitchen, living area, bathroom, and a private outdoor terrace with grill. Space for up to 5 guests.",
       rooms:"Rooms",
       room_main:"Master Bedroom",
-      room_main_desc:"Double bed, rattan headboard, olive green wardrobe, air conditioning, tiled floor.",
+      room_main_desc:"Double bed, rattan headboard, olive green wardrobe, air conditioning.",
       room_kids:"Kids' Bedroom",
       room_kids_desc:"Bunk bed (double below, single above) plus pull-out single. Blue walls, built-in wardrobe.",
       room_living:"Living Room",
-      room_living_desc:"Sofa, large TV, pellet stove, desk area, bookshelf with books and board games. Vintage Grado travel posters.",
+      room_living_desc:"Sofa, large TV, pellet stove, desk area, bookshelf with books and board games.",
       room_kitchen:"Kitchen",
-      room_kitchen_desc:"Gas hob, oven, fridge-freezer, kettle, moka, toaster. Opens onto the terrace.",
+      room_kitchen_desc:"Gas hob, fridge-freezer, moka, dishwasher. Opens onto the terrace.",
       room_bath:"Bathroom",
-      room_bath_desc:"Shower, toilet, bidet, washing machine. Window overlooking the pine garden.",
+      room_bath_desc:"Shower, toilet, bidet. Window overlooking the pine garden.",
       room_terrace:"Outdoor Terrace",
-      room_terrace_desc:"Shaded terrace with outdoor furniture and private charcoal grill. Perfect for summer evenings.",
+      room_terrace_desc:"Shaded terrace with outdoor furniture, outdoor kitchenette and washing machine. Perfect for summer evenings.",
+      room_veranda:"Veranda – Dining & Relax",
+      room_veranda_desc:"Covered outdoor veranda connecting the living area to the terrace. A relaxing spot for morning coffee or an afternoon read.",
+      room_parking:"Private Parking & Bikes",
+      room_parking_desc:"Covered private parking space included with your stay. No need to worry about finding a spot in busy summer months.",
       amenities_title:"What's included",
-      amenities:["Wi-Fi (fast fibre)","Air conditioning (Mitsubishi)","Pellet stove (winter)","Smart door lock (code entry)","Washing machine","Outdoor grill","Beach towels","Highchair available"],
+      amenities:["Wi-Fi (fast fibre)","Air conditioning","Private parking","3 bikes","Dishwasher","Washing machine","External kitchenette","Pellet stove (winter)","Smart door lock (code entry)","Baby crib available","Highchair available","Beach towels"],
     },
     guide: {
       title:"Guest Guide",
@@ -81,18 +85,30 @@ const T = {
       ],
     },
     neighborhood: {
-      title:"The Neighborhood",
+      title:"Local Guide",
       sub:"Our favourite spots around the apartment — handpicked recommendations from people who know Grado.",
-      categories:["All","Beach","Food & Drink","Shopping","Services"],
+      intro:"The apartment sits at the gateway to Grado's Città Giardino — a peaceful residential district, just a short walk from both the beach and the old town, without being in the middle of the summer chaos. The only park in the area, Parco delle Rose, lies right between the apartment and the city centre: a shaded, pleasant path we highly recommend for the stroll into town.",
+      categories:["All","Beach","Food & Drink","Ice Cream","Parks","Activities","Shopping","Services"],
       places:[
-        { cat:"Beach",        name:"Spiaggia di Grado",      text:"The main sandy beach, a 5-minute walk. Lido sections with sunbeds or free public areas." },
-        { cat:"Beach",        name:"Spiaggia di Fossalon",   text:"Wilder, quieter beach south of town. Ideal for families who prefer less crowds." },
-        { cat:"Food & Drink", name:"Trattoria de Toni",      text:"Legendary Grado restaurant. The fish soup is unmissable. Book ahead in summer." },
-        { cat:"Food & Drink", name:"Bar Grado",              text:"Our local morning coffee spot. Perfect espresso, fresh pastries, friendly faces." },
-        { cat:"Food & Drink", name:"Gelateria Al Porto",     text:"Best gelato in town. Try the 'Laguna' flavour — lagoon herbs and sea salt." },
+        { cat:"Beach", name:"Spiaggia Nuova",   text:"Full-service lido just 200 m from the apartment. Sun loungers, umbrellas, showers, beach bar and playground. Entrance fee applies.", map:"https://maps.app.goo.gl/MtKtu3JCe3Q2r6uP6" },
+        { cat:"Beach", name:"Spiaggia le Dune", text:"Free sandy beach in the dunes area, a 5-minute walk. Less crowded, no service — great for a more natural beach day.", map:"https://maps.app.goo.gl/Ry9VRm9H4xsR5vYg9" },
+        { cat:"Beach", name:"Grado Pineta",     text:"Quiet beach by the pine forest, a 15-minute walk. Free entry, less touristy — a lovely spot away from the summer crowds.", map:"https://maps.app.goo.gl/9nhHTviUEfkmn43M7" },
+        { cat:"Beach", name:"Dog Beach",        text:"Designated dog-friendly beach — dogs welcome in the water. Free entry. A great spot for guests travelling with four-legged friends.", map:"https://maps.app.goo.gl/vtqeMwiHwZu6Hw2w7" },
+        { cat:"Food & Drink", name:"Pizza & Döner",          text:"Pizza slices and doner — great for a quick bite or a late-night snack on the way back to the apartment.", map:"https://maps.app.goo.gl/sS7rN91fMvdcUk3Z8" },
+        { cat:"Food & Drink", name:"La Ciacolada",           text:"Neapolitan-style pizza. Excellent quality but gets very busy — be prepared to wait for a table.", map:"https://maps.app.goo.gl/NyDTmGYx1ABagjvt7" },
+        { cat:"Food & Drink", name:"Bistrot Ratatouille",    text:"In our opinion one of the best spots in Grado, just 1 minute from the apartment. Fresh food, good quality and very reasonably priced. Great for lunch or dinner.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
+        { cat:"Food & Drink", name:"Mandracchio Bistrot",    text:"In the port area. Fresh food and good quality at a very reasonable price.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
+        { cat:"Food & Drink", name:"Cardamomo",              text:"Upscale restaurant — ideal for an intimate dinner or a special occasion.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Food & Drink", name:"Là de le Vele",          text:"In the old town with a lovely view. A great setting for a relaxed meal.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
+        { cat:"Food & Drink", name:"Il Panino",              text:"The go-to spot for fried calamari to take away. A perfect snack while strolling through town.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
+        { cat:"Ice Cream",    name:"Antoniazzi Gelateria",   text:"The best gelato in Grado in our opinion — the only one we truly recommend. Expect a short queue, absolutely worth the wait.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
+        { cat:"Parks",        name:"Parco delle Rose",       text:"The only park in the area, right on the path between the apartment and the old town. Lovely shade and calm — we always recommend walking through it.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
+        { cat:"Activities",   name:"Kite Life",              text:"Kitesurfing school and equipment rental. Great whether you want to learn from scratch or just hire gear for the day.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
+        { cat:"Activities",   name:"Terme Marine Di Grado",  text:"Heated seawater pools — including a rooftop pool — thermal baths, and spa. A genuine highlight of Grado, especially worth a visit in shoulder season.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
         { cat:"Shopping",     name:"Mercato Coperto",        text:"Covered market with local fish, vegetables, and cheeses. Open mornings, closed Sunday." },
-        { cat:"Shopping",     name:"Coop Supermarket",       text:"Main supermarket, 8-minute walk. Open daily 08:00–20:00." },
-        { cat:"Services",     name:"Farmacia Centrale",      text:"Central pharmacy, Piazza Biagio Marin. Open Mon–Sat 08:30–12:30, 16:00–19:30." },
+        { cat:"Shopping",     name:"Supermarket",            text:"The closest supermarket to the apartment.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
+        { cat:"Services",     name:"Post Office & ATM",      text:"The closest post office and ATM to the apartment.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
+        { cat:"Services",     name:"Pharmacy",               text:"The closest pharmacy to the apartment.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
       ],
     },
     grado: {
@@ -125,7 +141,7 @@ const T = {
   },
 
   it: {
-    nav: { home:"Home", house:"L'Appartamento", guide:"Guida Ospiti", neighborhood:"Quartiere", grado:"Grado", findus:"Dove Siamo" },
+    nav: { home:"Home", house:"L'Appartamento", guide:"Guida Ospiti", neighborhood:"Guida Locale", grado:"Grado", findus:"Dove Siamo" },
     home: {
       badge:"Grado · Friuli Venezia Giulia",
       title:"Appartamento\nL'Isola D'Oro",
@@ -137,7 +153,7 @@ const T = {
       cards:[
         { title:"L'Appartamento", text:"Due camere, cucina attrezzata e spazi pieni di carattere — piastrelle vintage, opere d'arte, dettagli colorati." },
         { title:"Guida Ospiti", text:"Tutto quello che serve: check-in, griglia, telecomandi, elettrodomestici e regole della casa." },
-        { title:"Il Quartiere", text:"Le nostre spiagge, ristoranti, bar e negozi preferiti — selezione curata da chi conosce bene Grado." },
+        { title:"Guida Locale", text:"Le nostre spiagge, ristoranti, bar e negozi preferiti — selezione curata da chi conosce bene Grado." },
         { title:"Grado", text:"Il centro storico, la laguna, le spiagge. Gite a Trieste e Aquileia. Eventi stagionali e consigli locali." },
       ],
     },
@@ -145,14 +161,16 @@ const T = {
       title:"L'Appartamento",
       sub:"Due camere, cucina attrezzata, soggiorno, bagno e terrazza privata con grill. Fino a 5 ospiti.",
       rooms:"Le Stanze",
-      room_main:"Camera Matrimoniale",       room_main_desc:"Letto matrimoniale, testiera in rattan, armadio verde oliva, aria condizionata, pavimento in maiolica.",
+      room_main:"Camera Matrimoniale",       room_main_desc:"Letto matrimoniale, testiera in rattan, armadio verde oliva, aria condizionata.",
       room_kids:"Camera Bambini",            room_kids_desc:"Letto a castello (matrimoniale sotto, singolo sopra) più singolo estraibile. Pareti blu, armadio a muro.",
-      room_living:"Soggiorno",              room_living_desc:"Divano, TV grande, stufa a pellet, scrivania, libreria con libri e giochi da tavolo. Poster vintage di Grado.",
-      room_kitchen:"Cucina",               room_kitchen_desc:"Piano cottura a gas, forno, frigo-congelatore, bollitore, moka, tostapane. Si apre sulla terrazza.",
-      room_bath:"Bagno",                   room_bath_desc:"Doccia, wc, bidet, lavatrice. Finestra sul giardino di pini.",
-      room_terrace:"Terrazza Esterna",     room_terrace_desc:"Terrazza ombreggiata con arredi da esterno e griglia a carbone privata.",
+      room_living:"Soggiorno", room_living_desc:"Divano, TV grande, stufa a pellet, scrivania, libreria con libri e giochi da tavolo.",
+      room_kitchen:"Cucina",               room_kitchen_desc:"Piano cottura a gas, frigo-congelatore, moka, lavastoviglie. Si apre sulla terrazza.",
+      room_bath:"Bagno",                   room_bath_desc:"Doccia, wc, bidet. Finestra sul giardino di pini.",
+      room_terrace:"Terrazza Esterna",     room_terrace_desc:"Terrazza ombreggiata con arredi da esterno, cucina esterna e lavatrice. Perfetta per le serate estive.",
+      room_veranda:"Veranda – Pranzo & Relax",room_veranda_desc:"Veranda coperta che collega il soggiorno alla terrazza. Angolo relax ideale per il caffè mattutino o una lettura pomeridiana.",
+      room_parking:"Parcheggio Privato & Bici",   room_parking_desc:"Posto auto coperto privato incluso nel soggiorno. Nessun problema con il parcheggio nei mesi estivi affollati.",
       amenities_title:"Cosa è incluso",
-      amenities:["Wi-Fi (fibra veloce)","Aria condizionata (Mitsubishi)","Stufa a pellet (inverno)","Serratura smart (codice)","Lavatrice","Grill esterno","Asciugamani da spiaggia","Seggiolone disponibile"],
+      amenities:["Wi-Fi (fibra veloce)","Aria condizionata","Parcheggio privato","3 biciclette","Lavastoviglie","Lavatrice","Cucina esterna","Stufa a pellet (inverno)","Serratura smart (codice)","Lettino per neonati disponibile","Seggiolone disponibile","Asciugamani da spiaggia"],
     },
     guide: {
       title:"Guida Ospiti",
@@ -171,18 +189,30 @@ const T = {
       ],
     },
     neighborhood: {
-      title:"Il Quartiere",
+      title:"Guida Locale",
       sub:"I nostri posti preferiti — selezione curata di chi conosce Grado.",
-      categories:["Tutti","Spiaggia","Cibo e Bevande","Shopping","Servizi"],
+      intro:"L'appartamento si trova all'ingresso della Città Giardino di Grado — un quartiere residenziale tranquillo, a pochi passi dalla spiaggia e dal centro storico, lontano dal caos estivo. L'unico parco della zona, il Parco delle Rose, si trova proprio tra l'appartamento e il centro: un percorso ombreggiato e rilassante che consigliamo vivamente per la passeggiata verso il centro.",
+      categories:["Tutti","Spiaggia","Cibo e Bevande","Gelato","Parchi","Attività","Shopping","Servizi"],
       places:[
-        { cat:"Spiaggia",       name:"Spiaggia di Grado",      text:"La spiaggia principale, a 5 minuti a piedi. Lido con lettini o aree libere gratuite." },
-        { cat:"Spiaggia",       name:"Spiaggia di Fossalon",   text:"Spiaggia più selvaggia e tranquilla a sud della città. Ideale per famiglie." },
-        { cat:"Cibo e Bevande", name:"Trattoria de Toni",      text:"Ristorante storico di Grado. La boreto alla gradese è imperdibile. Prenotare in estate." },
-        { cat:"Cibo e Bevande", name:"Bar Grado",              text:"Il nostro caffè del mattino. Espresso perfetto, cornetti freschi." },
-        { cat:"Cibo e Bevande", name:"Gelateria Al Porto",     text:"Il miglior gelato in città. Da provare il gusto 'Laguna'." },
+        { cat:"Spiaggia", name:"Spiaggia Nuova",   text:"Lido attrezzato a soli 200 m dall'appartamento. Lettini, ombrelloni, docce, bar spiaggia e parco giochi. Ingresso a pagamento.", map:"https://maps.app.goo.gl/MtKtu3JCe3Q2r6uP6" },
+        { cat:"Spiaggia", name:"Spiaggia le Dune", text:"Spiaggia libera nella zona delle dune, a 5 minuti a piedi. Meno affollata, senza servizi — ideale per una giornata più naturale.", map:"https://maps.app.goo.gl/Ry9VRm9H4xsR5vYg9" },
+        { cat:"Spiaggia", name:"Grado Pineta",     text:"Spiaggia tranquilla vicino alla pineta, a 15 minuti a piedi. Ingresso gratuito, meno turistica — perfetta per staccare dalla folla estiva.", map:"https://maps.app.goo.gl/9nhHTviUEfkmn43M7" },
+        { cat:"Spiaggia", name:"Dog Beach",        text:"Spiaggia dedicata ai cani — benvenuti in acqua. Ingresso gratuito. Ideale per chi viaggia con amici a quattro zampe.", map:"https://maps.app.goo.gl/vtqeMwiHwZu6Hw2w7" },
+        { cat:"Cibo e Bevande", name:"Pizza & Döner",          text:"Pizza al trancio e kebab — perfetto per uno spuntino veloce o uno snack serale tornando all'appartamento.", map:"https://maps.app.goo.gl/sS7rN91fMvdcUk3Z8" },
+        { cat:"Cibo e Bevande", name:"La Ciacolada",           text:"Pizza in stile napoletano. Ottima qualità ma sempre piena — preparatevi ad aspettare.", map:"https://maps.app.goo.gl/NyDTmGYx1ABagjvt7" },
+        { cat:"Cibo e Bevande", name:"Bistrot Ratatouille",    text:"Uno dei migliori posti di Grado secondo noi, a 1 minuto dall'appartamento. Cibo fresco, buona qualità e prezzi ragionevoli. Ottimo per pranzo e cena.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
+        { cat:"Cibo e Bevande", name:"Mandracchio Bistrot",    text:"Nella zona del porto. Cibo fresco e buona qualità a un prezzo molto ragionevole.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
+        { cat:"Cibo e Bevande", name:"Cardamomo",              text:"Ristorante raffinato — ideale per una cena intima o un'occasione speciale.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Cibo e Bevande", name:"Là de le Vele",          text:"Nel centro storico con una bella vista. Un posto meraviglioso per un pasto tranquillo.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
+        { cat:"Cibo e Bevande", name:"Il Panino",              text:"Il posto migliore per calamari fritti da asporto. Uno spuntino perfetto passeggiando per la città.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
+        { cat:"Gelato",         name:"Antoniazzi Gelateria",   text:"Il miglior gelato di Grado secondo noi — l'unico che raccomandiamo davvero. Aspettatevi una piccola fila, ma ne vale assolutamente la pena.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
+        { cat:"Parchi",         name:"Parco delle Rose",       text:"L'unico parco della zona, sul percorso tra l'appartamento e il centro storico. Tanto verde e ombra — lo consigliamo sempre per la passeggiata verso il centro.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
+        { cat:"Attività",       name:"Kite Life",              text:"Scuola di kitesurf e noleggio attrezzatura. Perfetto sia per chi vuole imparare da zero sia per chi cerca l'attrezzatura per la giornata.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
+        { cat:"Attività",       name:"Terme Marine Di Grado",  text:"Piscine di acqua di mare riscaldata — inclusa una piscina sul tetto — bagni termali e spa. Un'esperienza da non perdere a Grado, ideale anche in bassa stagione.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
         { cat:"Shopping",       name:"Mercato Coperto",        text:"Mercato coperto con pesce locale, verdure e formaggi. Aperto la mattina, chiuso domenica." },
-        { cat:"Shopping",       name:"Supermercato Coop",      text:"Supermercato principale, 8 minuti a piedi. Aperto tutti i giorni 08:00–20:00." },
-        { cat:"Servizi",        name:"Farmacia Centrale",      text:"Farmacia in Piazza Biagio Marin. Lun–Sab 08:30–12:30, 16:00–19:30." },
+        { cat:"Shopping",       name:"Supermercato",           text:"Il supermercato più vicino all'appartamento.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
+        { cat:"Servizi",        name:"Ufficio Postale & ATM",  text:"L'ufficio postale e il bancomat più vicini all'appartamento.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
+        { cat:"Servizi",        name:"Farmacia",               text:"La farmacia più vicina all'appartamento.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
       ],
     },
     grado: {
@@ -215,7 +245,7 @@ const T = {
   },
 
   de: {
-    nav: { home:"Startseite", house:"Die Wohnung", guide:"Gästeguide", neighborhood:"Umgebung", grado:"Grado", findus:"Anreise" },
+    nav: { home:"Startseite", house:"Die Wohnung", guide:"Gästeguide", neighborhood:"Lokaler Guide", grado:"Grado", findus:"Anreise" },
     home: {
       badge:"Grado · Friaul-Julisch Venetien",
       title:"Apartment\nL'Isola D'Oro",
@@ -227,7 +257,7 @@ const T = {
       cards:[
         { title:"Die Wohnung", text:"Zwei Zimmer, vollausgestattete Küche und Räume voller Charakter — Vintage-Fliesen, Kunst, bunte Details." },
         { title:"Gästeguide", text:"Alles was Sie brauchen: Check-in, Grill, TV-Fernbedienungen, Geräte und Hausregeln." },
-        { title:"Umgebung", text:"Unsere Lieblingsstrände, Restaurants, Bars und Geschäfte — kuratierte Empfehlungen." },
+        { title:"Lokaler Guide", text:"Unsere Lieblingsstrände, Restaurants, Bars und Geschäfte — kuratierte Empfehlungen." },
         { title:"Grado", text:"Altstadt, Lagune, Strände. Ausflüge nach Triest und Aquileia. Saisonale Events und lokale Tipps." },
       ],
     },
@@ -237,12 +267,14 @@ const T = {
       rooms:"Zimmer",
       room_main:"Hauptschlafzimmer",  room_main_desc:"Doppelbett, Rattankopfteil, olivgrüner Kleiderschrank, Klimaanlage.",
       room_kids:"Kinderzimmer",        room_kids_desc:"Etagenbett (Doppel unten, Einzel oben) plus ausziehbares Einzelbett. Blaue Wände.",
-      room_living:"Wohnzimmer",       room_living_desc:"Sofa, großer TV, Pelletofen, Schreibtisch, Bücherregal. Vintage Grado-Poster.",
-      room_kitchen:"Küche",           room_kitchen_desc:"Gasherd, Backofen, Kühlschrank, Wasserkocher, Mokkakanne, Toaster.",
-      room_bath:"Badezimmer",         room_bath_desc:"Dusche, WC, Bidet, Waschmaschine. Fenster zum Kiefernpark.",
-      room_terrace:"Außenterrasse",   room_terrace_desc:"Überdachte Terrasse mit Gartenmöbeln und privatem Holzkohlegrill.",
+      room_living:"Wohnzimmer", room_living_desc:"Sofa, großer TV, Pelletofen, Schreibtisch, Bücherregal.",
+      room_kitchen:"Küche",           room_kitchen_desc:"Gasherd, Kühlschrank, Mokkakanne, Geschirrspüler. Öffnet zur Terrasse.",
+      room_bath:"Badezimmer",         room_bath_desc:"Dusche, WC, Bidet. Fenster zum Kiefernpark.",
+      room_terrace:"Außenterrasse",   room_terrace_desc:"Überdachte Terrasse mit Gartenmöbeln, Außenküche und Waschmaschine. Ideal für Sommerabende.",
+      room_veranda:"Veranda – Essen & Entspannen",room_veranda_desc:"Überdachte Veranda, die Wohnbereich und Terrasse verbindet. Ideal für den Morgenkaffee oder eine entspannte Lektüre.",
+      room_parking:"Privater Parkplatz & Fahrräder", room_parking_desc:"Überdachter privater Stellplatz im Preis inbegriffen. Kein Stress bei der Parkplatzsuche in den Sommermonaten.",
       amenities_title:"Ausstattung",
-      amenities:["Wi-Fi (Glasfaser)","Klimaanlage (Mitsubishi)","Pelletofen (Winter)","Smart-Türschloss (Code)","Waschmaschine","Außengrill","Strandtücher","Hochstuhl verfügbar"],
+      amenities:["Wi-Fi (Glasfaser)","Klimaanlage","Privater Parkplatz","3 Fahrräder","Geschirrspüler","Waschmaschine","Außenküche","Pelletofen (Winter)","Smart-Türschloss (Code)","Babybett verfügbar","Hochstuhl verfügbar","Strandtücher"],
     },
     guide: {
       title:"Gästeguide",
@@ -261,18 +293,30 @@ const T = {
       ],
     },
     neighborhood: {
-      title:"Die Umgebung",
+      title:"Lokaler Guide",
       sub:"Unsere Lieblingsplätze rund um die Wohnung.",
-      categories:["Alle","Strand","Essen & Trinken","Shopping","Services"],
+      intro:"Die Wohnung liegt am Eingang zur Città Giardino von Grado — einem ruhigen Wohnviertel, nur wenige Gehminuten vom Strand und der Altstadt entfernt, aber weit genug vom Sommertreiben. Der einzige Park der Gegend, der Parco delle Rose, liegt genau zwischen der Wohnung und dem Stadtzentrum: ein schattiger, angenehmer Weg, den wir für den Spaziergang ins Zentrum sehr empfehlen.",
+      categories:["Alle","Strand","Essen & Trinken","Eis","Parks","Aktivitäten","Shopping","Services"],
       places:[
-        { cat:"Strand",          name:"Spiaggia di Grado",    text:"Hauptstrand, 5 Gehminuten. Liegestühle oder kostenlose Bereiche." },
-        { cat:"Strand",          name:"Spiaggia di Fossalon", text:"Ruhigerer, wilderer Strand südlich der Stadt. Ideal für Familien." },
-        { cat:"Essen & Trinken", name:"Trattoria de Toni",    text:"Legendäres Fischrestaurant. Die Fischsuppe ist ein Muss. Im Sommer reservieren." },
-        { cat:"Essen & Trinken", name:"Bar Grado",            text:"Unser Morgen-Café. Perfekter Espresso und frische Croissants." },
-        { cat:"Essen & Trinken", name:"Gelateria Al Porto",   text:"Bestes Eis der Stadt. Geschmack 'Laguna' unbedingt probieren." },
-        { cat:"Shopping",        name:"Mercato Coperto",      text:"Überdachter Markt mit lokalem Fisch, Gemüse und Käse. Morgens, So geschlossen." },
-        { cat:"Shopping",        name:"Coop Supermarkt",      text:"Hauptsupermarkt, 8 Gehminuten. Täglich 08:00–20:00." },
-        { cat:"Services",        name:"Farmacia Centrale",    text:"Apotheke, Piazza Biagio Marin. Mo–Sa 08:30–12:30, 16:00–19:30." },
+        { cat:"Strand", name:"Spiaggia Nuova",   text:"Vollausgestatteter Lido nur 200 m von der Wohnung. Liegestühle, Sonnenschirme, Duschen, Strandbar und Spielplatz. Eintritt kostenpflichtig.", map:"https://maps.app.goo.gl/MtKtu3JCe3Q2r6uP6" },
+        { cat:"Strand", name:"Spiaggia le Dune", text:"Freier Sandstrand im Dünenbereich, 5 Gehminuten entfernt. Weniger belebt, kein Service — ideal für einen natürlicheren Strandtag.", map:"https://maps.app.goo.gl/Ry9VRm9H4xsR5vYg9" },
+        { cat:"Strand", name:"Grado Pineta",     text:"Ruhiger Strand am Kiefernwald, 15 Gehminuten entfernt. Freier Eintritt, weniger touristisch — ideal abseits des Sommertrubels.", map:"https://maps.app.goo.gl/9nhHTviUEfkmn43M7" },
+        { cat:"Strand", name:"Dog Beach",        text:"Ausgewiesener hundefreundlicher Strand — Hunde willkommen im Wasser. Freier Eintritt. Ideal für Reisende mit Vierbeiner.", map:"https://maps.app.goo.gl/vtqeMwiHwZu6Hw2w7" },
+        { cat:"Essen & Trinken", name:"Pizza & Döner",          text:"Pizzastücke und Döner — ideal für einen schnellen Bissen oder einen Spätabend-Snack auf dem Nachhauseweg.", map:"https://maps.app.goo.gl/sS7rN91fMvdcUk3Z8" },
+        { cat:"Essen & Trinken", name:"La Ciacolada",           text:"Neapolitanische Pizza. Ausgezeichnete Qualität, aber sehr belebt — Wartezeit einplanen.", map:"https://maps.app.goo.gl/NyDTmGYx1ABagjvt7" },
+        { cat:"Essen & Trinken", name:"Bistrot Ratatouille",    text:"Unserer Meinung nach einer der besten Spots in Grado, 1 Minute von der Wohnung entfernt. Frisches Essen, gute Qualität und sehr vernünftiger Preis. Großartig für Mittag- und Abendessen.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
+        { cat:"Essen & Trinken", name:"Mandracchio Bistrot",    text:"Im Hafenbereich. Frisches Essen und gute Qualität zu einem sehr vernünftigen Preis.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
+        { cat:"Essen & Trinken", name:"Cardamomo",              text:"Gehobenes Restaurant — ideal für ein intimes Abendessen oder einen besonderen Anlass.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Essen & Trinken", name:"Là de le Vele",          text:"In der Altstadt mit schöner Aussicht. Ein wundervoller Ort für eine entspannte Mahlzeit.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
+        { cat:"Essen & Trinken", name:"Il Panino",              text:"Die beste Adresse für gebratene Tintenfischringe zum Mitnehmen. Ein perfekter Snack beim Stadtbummel.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
+        { cat:"Eis",             name:"Antoniazzi Gelateria",   text:"Unserer Meinung nach das beste Gelato in Grado — das einzige, das wir wirklich empfehlen. Kurze Warteschlange, aber absolut die Wartezeit wert.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
+        { cat:"Parks",           name:"Parco delle Rose",      text:"Der einzige Park der Gegend, direkt auf dem Weg zwischen der Wohnung und der Altstadt. Viel Schatten und Ruhe — wir empfehlen immer, dort entlangzugehen.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
+        { cat:"Aktivitäten",     name:"Kite Life",             text:"Kitesurfschule und Verleih. Ideal für Anfänger, die Unterricht suchen, sowie für erfahrene Fahrer, die Ausrüstung für den Tag mieten möchten.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
+        { cat:"Aktivitäten",     name:"Terme Marine Di Grado", text:"Beheizte Meerwasserbecken — darunter ein Dachpool —, Thermalbäder und Spa. Ein echtes Highlight in Grado, besonders in der Nebensaison.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
+        { cat:"Shopping",        name:"Mercato Coperto",       text:"Überdachter Markt mit lokalem Fisch, Gemüse und Käse. Morgens, So geschlossen." },
+        { cat:"Shopping",        name:"Supermarkt",            text:"Der nächste Supermarkt zur Wohnung.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
+        { cat:"Services",        name:"Postamt & ATM",         text:"Das nächste Postamt und der nächste Geldautomat zur Wohnung.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
+        { cat:"Services",        name:"Apotheke",              text:"Die nächste Apotheke zur Wohnung.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
       ],
     },
     grado: {
@@ -305,7 +349,7 @@ const T = {
   },
 
   pl: {
-    nav: { home:"Strona główna", house:"Apartament", guide:"Przewodnik", neighborhood:"Okolica", grado:"Grado", findus:"Jak dojechać" },
+    nav: { home:"Strona główna", house:"Apartament", guide:"Przewodnik", neighborhood:"Lokalny Przewodnik", grado:"Grado", findus:"Jak dojechać" },
     home: {
       badge:"Grado · Friuli Wenecja Julijska",
       title:"Apartament\nL'Isola D'Oro",
@@ -317,7 +361,7 @@ const T = {
       cards:[
         { title:"Apartament", text:"Dwie sypialnie, w pełni wyposażona kuchnia i pełne uroku przestrzenie — vintage płytki, dzieła sztuki, kolorowe detale." },
         { title:"Przewodnik gościa", text:"Wszystko, czego potrzebujesz: zameldowanie, grill, piloty, sprzęt i zasady domu." },
-        { title:"Okolica", text:"Nasze ulubione plaże, restauracje, bary i sklepy — sprawdzone miejsca od osób znających Grado." },
+        { title:"Lokalny Przewodnik", text:"Nasze ulubione plaże, restauracje, bary i sklepy — sprawdzone miejsca od osób znających Grado." },
         { title:"Grado", text:"Stare miasto, laguna, plaże. Wycieczki do Triestu i Akwilei. Sezonowe imprezy i lokalne porady." },
       ],
     },
@@ -327,12 +371,14 @@ const T = {
       rooms:"Pokoje",
       room_main:"Sypialnia główna",   room_main_desc:"Łóżko podwójne, zagłówek rattanowy, szafa w kolorze oliwkowym, klimatyzacja.",
       room_kids:"Pokój dziecięcy",    room_kids_desc:"Łóżko piętrowe (podwójne na dole, pojedyncze na górze) plus rozkładane łóżko. Niebieskie ściany.",
-      room_living:"Salon",           room_living_desc:"Sofa, duży TV, piec na pellet, biurko, biblioteczka z książkami i grami. Vintage plakaty Grado.",
-      room_kitchen:"Kuchnia",        room_kitchen_desc:"Kuchenka gazowa, piekarnik, lodówka, czajnik, moka, toster.",
-      room_bath:"Łazienka",          room_bath_desc:"Prysznic, toaleta, bidet, pralka. Okno na ogród sosnowy.",
-      room_terrace:"Taras zewnętrzny",room_terrace_desc:"Zadaszony taras z meblami ogrodowymi i prywatnym grillem węglowym.",
+      room_living:"Salon", room_living_desc:"Sofa, duży TV, piec na pellet, biurko, biblioteczka z książkami i grami.",
+      room_kitchen:"Kuchnia",        room_kitchen_desc:"Kuchenka gazowa, lodówka, moka, zmywarka. Wychodzi na taras.",
+      room_bath:"Łazienka",          room_bath_desc:"Prysznic, toaleta, bidet. Okno na ogród sosnowy.",
+      room_terrace:"Taras zewnętrzny",room_terrace_desc:"Zadaszony taras z meblami ogrodowymi, zewnętrzną kuchnią i pralką. Idealny na letnie wieczory.",
+      room_veranda:"Weranda – Jadalnia & Relaks",room_veranda_desc:"Zadaszona weranda łącząca salon z tarasem. Idealne miejsce na poranną kawę lub popołudniową lekturę.",
+      room_parking:"Prywatny Parking & Rowery",room_parking_desc:"Zadaszone prywatne miejsce parkingowe wliczone w pobyt. Żaden stres z szukaniem miejsca w ruchliwych miesiącach letnich.",
       amenities_title:"Co jest w cenie",
-      amenities:["Wi-Fi (szybki światłowód)","Klimatyzacja (Mitsubishi)","Piec na pellet (zima)","Smart zamek (kod)","Pralka","Grill zewnętrzny","Ręczniki plażowe","Krzesełko dla dziecka"],
+      amenities:["Wi-Fi (szybki światłowód)","Klimatyzacja","Prywatny parking","3 rowery","Zmywarka","Pralka","Zewnętrzna kuchnia","Piec na pellet (zima)","Smart zamek (kod)","Łóżeczko dla niemowląt dostępne","Krzesełko dla dziecka","Ręczniki plażowe"],
     },
     guide: {
       title:"Przewodnik gościa",
@@ -351,18 +397,30 @@ const T = {
       ],
     },
     neighborhood: {
-      title:"Okolica",
+      title:"Lokalny Przewodnik",
       sub:"Nasze ulubione miejsca w okolicy apartamentu.",
-      categories:["Wszystkie","Plaża","Jedzenie i napoje","Zakupy","Usługi"],
+      intro:"Apartament stoi u bram Città Giardino w Grado — spokojnej dzielnicy mieszkaniowej, zaledwie kilka minut spacerem od plaży i centrum, z dala od letniego zgiełku. Jedyny park w okolicy, Parco delle Rose, leży dokładnie na trasie między apartamentem a starym miastem: zacieniona, przyjemna ścieżka, którą gorąco polecamy na spacer do centrum.",
+      categories:["Wszystkie","Plaża","Jedzenie i napoje","Lody","Parki","Aktywności","Zakupy","Usługi"],
       places:[
-        { cat:"Plaża",             name:"Spiaggia di Grado",    text:"Główna plaża piaszczysta, 5 minut piechotą. Leżaki lub bezpłatne strefy." },
-        { cat:"Plaża",             name:"Spiaggia di Fossalon", text:"Dzika, spokojniejsza plaża na południe od miasta. Idealna dla rodzin." },
-        { cat:"Jedzenie i napoje", name:"Trattoria de Toni",    text:"Legendarna restauracja rybna. Zupa rybna obowiązkowa. Rezerwacja wskazana latem." },
-        { cat:"Jedzenie i napoje", name:"Bar Grado",            text:"Nasza poranna kawiarnia. Doskonałe espresso i świeże rogaliki." },
-        { cat:"Jedzenie i napoje", name:"Gelateria Al Porto",   text:"Najlepsze lody w mieście. Polecamy smak 'Laguna'." },
-        { cat:"Zakupy",            name:"Mercato Coperto",      text:"Kryty rynek z lokalną rybą, warzywami i serami. Rano, nieczynny w niedzielę." },
-        { cat:"Zakupy",            name:"Supermarket Coop",     text:"Główny supermarket, 8 min piechotą. Codziennie 08:00–20:00." },
-        { cat:"Usługi",            name:"Farmacia Centrale",    text:"Apteka, Piazza Biagio Marin. Pon–Sob 08:30–12:30, 16:00–19:30." },
+        { cat:"Plaża", name:"Spiaggia Nuova",   text:"W pełni wyposażone lido zaledwie 200 m od apartamentu. Leżaki, parasole, prysznice, beach bar i plac zabaw. Wstęp płatny.", map:"https://maps.app.goo.gl/MtKtu3JCe3Q2r6uP6" },
+        { cat:"Plaża", name:"Spiaggia le Dune", text:"Bezpłatna plaża w strefie wydm, 5 minut piechotą. Mniej zatłoczona, bez obsługi — idealna na bardziej naturalny dzień na plaży.", map:"https://maps.app.goo.gl/Ry9VRm9H4xsR5vYg9" },
+        { cat:"Plaża", name:"Grado Pineta",     text:"Spokojna plaża przy sosnowym lesie, 15 minut piechotą. Bezpłatny wstęp, mniej turystyczna — świetna ucieczka od letnich tłumów.", map:"https://maps.app.goo.gl/9nhHTviUEfkmn43M7" },
+        { cat:"Plaża", name:"Dog Beach",        text:"Wyznaczona plaża przyjazna psom — psy mile widziane w wodzie. Bezpłatny wstęp. Idealne miejsce dla podróżujących z czworonogami.", map:"https://maps.app.goo.gl/vtqeMwiHwZu6Hw2w7" },
+        { cat:"Jedzenie i napoje", name:"Pizza & Döner",          text:"Pizza na kawałki i döner — świetne na szybki kąsek lub późnonocną przekąskę w drodze do apartamentu.", map:"https://maps.app.goo.gl/sS7rN91fMvdcUk3Z8" },
+        { cat:"Jedzenie i napoje", name:"La Ciacolada",           text:"Pizza w stylu neapolitańskim. Doskonała jakość, ale bardzo zajęta — bądźcie gotowi poczekać.", map:"https://maps.app.goo.gl/NyDTmGYx1ABagjvt7" },
+        { cat:"Jedzenie i napoje", name:"Bistrot Ratatouille",    text:"Naszym zdaniem jedno z najlepszych miejsc w Grado, 1 minuta od apartamentu. Świeże jedzenie, dobra jakość i bardzo przystępne ceny. Świetne na lunch lub kolację.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
+        { cat:"Jedzenie i napoje", name:"Mandracchio Bistrot",    text:"W obszarze portowym. Świeże jedzenie i dobra jakość w bardzo rozsądnej cenie.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
+        { cat:"Jedzenie i napoje", name:"Cardamomo",              text:"Ekskluzywna restauracja — idealna na romantyczną kolację lub wyjątkową okazję.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Jedzenie i napoje", name:"Là de le Vele",          text:"W starym mieście z pięknym widokiem. Świetne miejsce na spokojny posiłek.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
+        { cat:"Jedzenie i napoje", name:"Il Panino",              text:"Najlepsze miejsce na smażone kalmary na wynos. Idealna przekąska podczas spaceru po mieście.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
+        { cat:"Lody",              name:"Antoniazzi Gelateria",   text:"Najlepsze gelato w Grado według nas — jedyne, które naprawdę polecamy. Spodziewaj się krótkiej kolejki — absolutnie warto.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
+        { cat:"Parki",             name:"Parco delle Rose",      text:"Jedyny park w okolicy, na trasie między apartamentem a starym miastem. Mnóstwo cienia i spokoju — zawsze polecamy tędy przechodzić.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
+        { cat:"Aktywności",        name:"Kite Life",             text:"Szkoła kitesurfingu i wypożyczalnia sprzętu. Idealne zarówno dla tych, którzy chcą się nauczyć, jak i dla doświadczonych, szukających sprzętu na dzień.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
+        { cat:"Aktywności",        name:"Terme Marine Di Grado", text:"Podgrzewane baseny z wodą morską — w tym basen na dachu — kąpiele termalne i spa. Wyjątkowa atrakcja Grado, warta odwiedzenia szczególnie poza sezonem.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
+        { cat:"Zakupy",            name:"Mercato Coperto",       text:"Kryty rynek z lokalną rybą, warzywami i serami. Rano, nieczynny w niedzielę." },
+        { cat:"Zakupy",            name:"Supermarket",           text:"Najbliższy supermarket od apartamentu.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
+        { cat:"Usługi",            name:"Poczta & Bankomat",     text:"Najbliższy urząd pocztowy i bankomat od apartamentu.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
+        { cat:"Usługi",            name:"Apteka",                text:"Najbliższa apteka od apartamentu.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
       ],
     },
     grado: {
@@ -395,7 +453,7 @@ const T = {
   },
 
   sk: {
-    nav: { home:"Domov", house:"Apartmán", guide:"Sprievodca", neighborhood:"Okolie", grado:"Grado", findus:"Kde nás nájdete" },
+    nav: { home:"Domov", house:"Apartmán", guide:"Sprievodca", neighborhood:"Lokálny Sprievodca", grado:"Grado", findus:"Kde nás nájdete" },
     home: {
       badge:"Grado · Friuli Venezia Giulia",
       title:"Apartmán\nL'Isola D'Oro",
@@ -407,7 +465,7 @@ const T = {
       cards:[
         { title:"Apartmán", text:"Dve spálne, plne vybavená kuchyňa a priestory plné charakteru — vintage dlaždice, umenie, farebné detaily." },
         { title:"Sprievodca hosťa", text:"Všetko čo potrebujete: check-in, gril, TV diaľkové ovládače, spotrebiče a domáci poriadok." },
-        { title:"Okolie", text:"Naše obľúbené pláže, reštaurácie, bary a obchody — overené tipy od ľudí, ktorí Grado dobre poznajú." },
+        { title:"Lokálny Sprievodca", text:"Naše obľúbené pláže, reštaurácie, bary a obchody — overené tipy od ľudí, ktorí Grado dobre poznajú." },
         { title:"Grado", text:"Staré mesto, lagúna, pláže. Výlety do Terstu a Aquileia. Sezónne podujatia a miestne tipy." },
       ],
     },
@@ -417,12 +475,14 @@ const T = {
       rooms:"Izby",
       room_main:"Hlavná spálňa",      room_main_desc:"Manželská posteľ, ratanové čelo, olivová skriňa, klimatizácia.",
       room_kids:"Detská izba",        room_kids_desc:"Poschodová posteľ (dvojlôžko dole, jednolôžko hore) plus výsuvné jednolôžko. Modré steny.",
-      room_living:"Obývačka",        room_living_desc:"Pohovka, veľká TV, peletový krb, písací stôl, knižnica. Vintage plagáty Grado.",
-      room_kitchen:"Kuchyňa",        room_kitchen_desc:"Plynový sporák, rúra, chladnička, kanvica, moka, hriankovač.",
-      room_bath:"Kúpeľňa",           room_bath_desc:"Sprcha, WC, bidet, práčka. Okno do borovicovej záhrady.",
-      room_terrace:"Vonkajšia terasa",room_terrace_desc:"Tienistá terasa so záhradným nábytkom a súkromným dreveným grilom.",
+      room_living:"Obývačka",room_living_desc:"Pohovka, veľká TV, peletový krb, písací stôl, knižnica.",
+      room_kitchen:"Kuchyňa",        room_kitchen_desc:"Plynový sporák, chladnička, moka, umývačka riadu. Otvára sa na terasu.",
+      room_bath:"Kúpeľňa",           room_bath_desc:"Sprcha, WC, bidet. Okno do borovicovej záhrady.",
+      room_terrace:"Vonkajšia terasa",room_terrace_desc:"Tienistá terasa so záhradným nábytkom, vonkajšou kuchynkou a práčkou. Ideálna na letné večery.",
+      room_veranda:"Veranda – Jedáleň & Relax",room_veranda_desc:"Krytá veranda spájajúca obývačku s terasou. Ideálne miesto na rannú kávu alebo popoludňajšie čítanie.",
+      room_parking:"Súkromné Parkovanie & Bicykle",room_parking_desc:"Kryté súkromné parkovacie miesto je súčasťou pobytu. Žiadny stres s hľadaním parkovacieho miesta v letnej sezóne.",
       amenities_title:"Čo je v cene",
-      amenities:["Wi-Fi (rýchle vlákno)","Klimatizácia (Mitsubishi)","Peletový krb (zima)","Smart zámok (kód)","Práčka","Vonkajší gril","Plážové uteráky","Detská stolička"],
+      amenities:["Wi-Fi (rýchle vlákno)","Klimatizácia","Súkromné parkovanie","3 bicykle","Umývačka riadu","Práčka","Vonkajšia kuchynka","Peletový krb (zima)","Smart zámok (kód)","Detská postieľka k dispozícii","Detská stolička","Plážové uteráky"],
     },
     guide: {
       title:"Sprievodca hosťa",
@@ -441,18 +501,30 @@ const T = {
       ],
     },
     neighborhood: {
-      title:"Okolie",
+      title:"Lokálny Sprievodca",
       sub:"Naše obľúbené miesta v okolí apartmánu.",
-      categories:["Všetky","Pláž","Jedlo a nápoje","Nákupy","Služby"],
+      intro:"Apartmán stojí na vstupe do Città Giardino v Grado — tichej obytnej štvrte, len niekoľko minút chôdze od pláže a centra, ďaleko od letného ruchu. Jediný park v oblasti, Parco delle Rose, leží priamo na ceste medzi apartmánom a starým mestom: tienistá, príjemná trasa, ktorú vždy odporúčame na prechádzku do centra.",
+      categories:["Všetky","Pláž","Jedlo a nápoje","Zmrzlina","Parky","Aktivity","Nákupy","Služby"],
       places:[
-        { cat:"Pláž",           name:"Spiaggia di Grado",    text:"Hlavná piesočnatá pláž, 5 min peši. Prenájom ležadiel alebo bezplatné zóny." },
-        { cat:"Pláž",           name:"Spiaggia di Fossalon", text:"Divšia, pokojnejšia pláž južne od mesta. Ideálna pre rodiny." },
-        { cat:"Jedlo a nápoje", name:"Trattoria de Toni",    text:"Legendárna rybia reštaurácia. Rybia polievka je povinnosť. Rezervácia v lete." },
-        { cat:"Jedlo a nápoje", name:"Bar Grado",            text:"Naša ranná kaviareň. Dokonalé espresso a čerstvé croissanty." },
-        { cat:"Jedlo a nápoje", name:"Gelateria Al Porto",   text:"Najlepšia zmrzlina v meste. Odporúčame chuť 'Laguna'." },
-        { cat:"Nákupy",         name:"Mercato Coperto",      text:"Krytý trh s miestnou rybou, zeleninou a syrmi. Ráno, v nedeľu zatvorené." },
-        { cat:"Nákupy",         name:"Supermarket Coop",     text:"Hlavný supermarket, 8 min peši. Denne 08:00–20:00." },
-        { cat:"Služby",         name:"Farmacia Centrale",    text:"Lekáreň, Piazza Biagio Marin. Po–So 08:30–12:30, 16:00–19:30." },
+        { cat:"Pláž", name:"Spiaggia Nuova",   text:"Plne vybavené lido len 200 m od apartmánu. Ležadlá, slnečníky, sprchy, beach bar a ihrisko. Vstupné sa platí.", map:"https://maps.app.goo.gl/MtKtu3JCe3Q2r6uP6" },
+        { cat:"Pláž", name:"Spiaggia le Dune", text:"Bezplatná piesočná pláž v oblasti dún, 5 minút pešo. Menej preplnená, bez obsluhy — skvelá pre prirodzenejší deň na pláži.", map:"https://maps.app.goo.gl/Ry9VRm9H4xsR5vYg9" },
+        { cat:"Pláž", name:"Grado Pineta",     text:"Tichá pláž pri borovicovom lese, 15 minút pešo. Vstup zadarmo, menej turistická — ideálne miesto mimo letného ruchu.", map:"https://maps.app.goo.gl/9nhHTviUEfkmn43M7" },
+        { cat:"Pláž", name:"Dog Beach",        text:"Vyhradená pláž pre psov — psy vítané vo vode. Vstup zadarmo. Skvelé miesto pre cestujúcich so štvornohými priateľmi.", map:"https://maps.app.goo.gl/vtqeMwiHwZu6Hw2w7" },
+        { cat:"Jedlo a nápoje", name:"Pizza & Döner",          text:"Pizza na plátky a döner — skvelé na rýchle zahryznutie alebo večerný snack cestou domov.", map:"https://maps.app.goo.gl/sS7rN91fMvdcUk3Z8" },
+        { cat:"Jedlo a nápoje", name:"La Ciacolada",           text:"Pizza v neapolskom štýle. Výborná kvalita, ale veľmi rušná — pripravte sa na čakanie.", map:"https://maps.app.goo.gl/NyDTmGYx1ABagjvt7" },
+        { cat:"Jedlo a nápoje", name:"Bistrot Ratatouille",    text:"Podľa nás jedno z najlepších miest v Grado, 1 minútu od apartmánu. Čerstvé jedlo, dobrá kvalita a veľmi rozumné ceny. Skvelé na obed aj večeru.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
+        { cat:"Jedlo a nápoje", name:"Mandracchio Bistrot",    text:"V prístavnej oblasti. Čerstvé jedlo a dobrá kvalita za veľmi rozumnú cenu.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
+        { cat:"Jedlo a nápoje", name:"Cardamomo",              text:"Luxusná reštaurácia — ideálna na romantickú večeru alebo špeciálnu príležitosť.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Jedlo a nápoje", name:"Là de le Vele",          text:"V starom meste s krásnym výhľadom. Skvelé miesto na pokojné jedlo.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
+        { cat:"Jedlo a nápoje", name:"Il Panino",              text:"Najlepšie miesto na vyprážané kalamáre so sebou. Dokonalý snack pri prechádzke mestom.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
+        { cat:"Zmrzlina",       name:"Antoniazzi Gelateria",   text:"Podľa nás najlepšie gelato v Grado — jediné, ktoré skutočne odporúčame. Čakajte krátku frontu — úplne to stojí za to.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
+        { cat:"Parky",          name:"Parco delle Rose",      text:"Jediný park v oblasti, priamo na ceste medzi apartmánom a starým mestom. Veľa tieňa a pokoja — vždy odporúčame prejsť tadiaľ.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
+        { cat:"Aktivity",       name:"Kite Life",             text:"Škola kitesurfingu a požičovňa vybavenia. Skvelé pre začiatočníkov, ktorí chcú hodiny, aj pre skúsených, ktorí hľadajú vybavenie na deň.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
+        { cat:"Aktivity",       name:"Terme Marine Di Grado", text:"Vyhrievané bazény s morskou vodou — vrátane strešného bazéna —, termálne kúpele a spa. Skutočný klenot Grado, výnimočne príjemné aj mimo hlavnej sezóny.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
+        { cat:"Nákupy",         name:"Mercato Coperto",       text:"Krytý trh s miestnou rybou, zeleninou a syrmi. Ráno, v nedeľu zatvorené." },
+        { cat:"Nákupy",         name:"Supermarket",           text:"Najbližší supermarket k apartmánu.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
+        { cat:"Služby",         name:"Pošta & Bankomat",      text:"Najbližšia pošta a bankomat k apartmánu.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
+        { cat:"Služby",         name:"Lekáreň",               text:"Najbližšia lekáreň k apartmánu.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
       ],
     },
     grado: {
@@ -485,7 +557,7 @@ const T = {
   },
 
   hu: {
-    nav: { home:"Főoldal", house:"Az Apartman", guide:"Vendégkalauz", neighborhood:"Környék", grado:"Grado", findus:"Megközelítés" },
+    nav: { home:"Főoldal", house:"Az Apartman", guide:"Vendégkalauz", neighborhood:"Helyi Kalauz", grado:"Grado", findus:"Megközelítés" },
     home: {
       badge:"Grado · Friuli Venezia Giulia",
       title:"Apartman\nL'Isola D'Oro",
@@ -497,7 +569,7 @@ const T = {
       cards:[
         { title:"Az Apartman", text:"Két hálószoba, teljesen felszerelt konyha és karakteres terek — vintage csempék, műalkotások, színes részletek." },
         { title:"Vendégkalauz", text:"Minden, amire szüksége van: bejelentkezés, grill, TV távirányítók, háztartási gépek és házirendek." },
-        { title:"A Környék", text:"Kedvenc strandjaink, éttermeink, bárjaink és boltjaink — Gradót jól ismerők ajánlásai." },
+        { title:"Helyi Kalauz", text:"Kedvenc strandjaink, éttermeink, bárjaink és boltjaink — Gradót jól ismerők ajánlásai." },
         { title:"Grado", text:"Óváros, lagúna, strandok. Kirándulások Triesztbe és Aquileiába. Szezonális programok és helyi tippek." },
       ],
     },
@@ -507,12 +579,14 @@ const T = {
       rooms:"Szobák",
       room_main:"Főhálószoba",       room_main_desc:"Franciaágy, rattan fejtámla, olívzöld szekrény, légkondicionáló.",
       room_kids:"Gyerekszoba",       room_kids_desc:"Emeletes ágy (franciaágy lent, egyszemélyes fent) + kihúzható egyszemélyes. Kék falak.",
-      room_living:"Nappali",        room_living_desc:"Kanapé, nagy TV, pelletkályha, íróasztal, könyvespolc. Vintage Grado plakátok.",
-      room_kitchen:"Konyha",        room_kitchen_desc:"Gáztűzhely, sütő, hűtő-fagyasztó, vízforraló, mokkafőző, kenyérpirító.",
-      room_bath:"Fürdőszoba",       room_bath_desc:"Zuhany, WC, bidé, mosógép. Ablak a fenyőkertre.",
-      room_terrace:"Külső terasz",  room_terrace_desc:"Árnyékos terasz kerti bútorokkal és privát fasén grillel.",
+      room_living:"Nappali",room_living_desc:"Kanapé, nagy TV, pelletkályha, íróasztal, könyvespolc.",
+      room_kitchen:"Konyha",        room_kitchen_desc:"Gáztűzhely, hűtő-fagyasztó, mokkafőző, mosogatógép. Kinyílik a teraszra.",
+      room_bath:"Fürdőszoba",       room_bath_desc:"Zuhany, WC, bidé. Ablak a fenyőkertre.",
+      room_terrace:"Külső terasz",  room_terrace_desc:"Árnyékos terasz kerti bútorokkal, külső konyhával és mosógéppel. Tökéletes nyári estékre.",
+      room_veranda:"Veranda – Étkezés & Pihenő",room_veranda_desc:"Fedett veranda, amely összekötve a nappalit a terasszal. Tökéletes reggeli kávéhoz vagy délutáni olvasáshoz.",
+      room_parking:"Privát Parkoló & Kerékpárok", room_parking_desc:"Fedett privát parkolóhely a szállásban. Nem kell aggódni a szabad helyek megtalálása miatt a nyüzsgő nyári hónapokban.",
       amenities_title:"Mi van benne az árban",
-      amenities:["Wi-Fi (gyors optikai)","Légkondicionáló (Mitsubishi)","Pelletkályha (tél)","Okos zár (kód)","Mosógép","Külső grill","Strandtörölközők","Gyerekszék elérhető"],
+      amenities:["Wi-Fi (gyors optikai)","Légkondicionáló","Privát parkoló","3 kerékpár","Mosogatógép","Mosógép","Külső konyha","Pelletkályha (tél)","Okos zár (kód)","Kiságy elérhető","Gyerekszék elérhető","Strandtörölközők"],
     },
     guide: {
       title:"Vendégkalauz",
@@ -531,18 +605,30 @@ const T = {
       ],
     },
     neighborhood: {
-      title:"A Környék",
+      title:"Helyi Kalauz",
       sub:"Kedvenc helyeink az apartman körül.",
-      categories:["Összes","Strand","Étkezés és italok","Bevásárlás","Szolgáltatások"],
+      intro:"Az apartman Grado Città Giardino negyedének kapujában áll — egy csendes lakónegyedben, mindössze néhány perces sétára a strandtól és a belvárostól, mégis messze a nyári forgatag zajától. A környék egyetlen parkja, a Parco delle Rose, pontosan az apartman és az óváros között helyezkedik el: árnyékos, kellemes sétaút, amelyet mindig ajánlunk a városközpontba vezető séta alkalmával.",
+      categories:["Összes","Strand","Étkezés és italok","Fagylalt","Parkok","Tevékenységek","Bevásárlás","Szolgáltatások"],
       places:[
-        { cat:"Strand",            name:"Spiaggia di Grado",    text:"Főstrand, 5 perces séta. Napozóágyak bérlése vagy ingyenes zónák." },
-        { cat:"Strand",            name:"Spiaggia di Fossalon", text:"Vadabb, csendesebb strand a várostól délre. Ideális családok számára." },
-        { cat:"Étkezés és italok", name:"Trattoria de Toni",    text:"Legendás halétterem. A halleves kötelező. Nyáron foglaljon előre." },
-        { cat:"Étkezés és italok", name:"Bar Grado",            text:"A mi reggeli kávézónk. Tökéletes espresso és friss croissantok." },
-        { cat:"Étkezés és italok", name:"Gelateria Al Porto",   text:"A legjobb fagylalt a városban. Próbálja a 'Laguna' ízét." },
-        { cat:"Bevásárlás",        name:"Mercato Coperto",      text:"Fedett piac helyi hallal, zöldségekkel és sajtokkal. Reggel, vasárnap zárva." },
-        { cat:"Bevásárlás",        name:"Coop Szupermarket",    text:"Főszupermarket, 8 perces séta. Naponta 08:00–20:00." },
-        { cat:"Szolgáltatások",    name:"Farmacia Centrale",    text:"Gyógyszertár, Piazza Biagio Marin. H–Szo 08:30–12:30, 16:00–19:30." },
+        { cat:"Strand", name:"Spiaggia Nuova",   text:"Teljesen felszerelt lido mindössze 200 m-re az apartmantól. Napágyak, napernyők, zuhanyzók, strandbar és játszótér. Belépőjegy szükséges.", map:"https://maps.app.goo.gl/MtKtu3JCe3Q2r6uP6" },
+        { cat:"Strand", name:"Spiaggia le Dune", text:"Ingyenes homokos strand a dűnék területén, 5 perc sétára. Kevésbé zsúfolt, nincs szolgáltatás — tökéletes egy természetesebb strandnaphoz.", map:"https://maps.app.goo.gl/Ry9VRm9H4xsR5vYg9" },
+        { cat:"Strand", name:"Grado Pineta",     text:"Csendes strand a fenyőerdő mellett, 15 perc sétára. Ingyenes belépés, kevésbé turistás — remek menedék a nyári tömeg elől.", map:"https://maps.app.goo.gl/9nhHTviUEfkmn43M7" },
+        { cat:"Strand", name:"Dog Beach",        text:"Kijelölt kutyabarát strand — kutyák szívesen látottak a vízben. Ingyenes belépés. Remek hely kutyával utazóknak.", map:"https://maps.app.goo.gl/vtqeMwiHwZu6Hw2w7" },
+        { cat:"Étkezés és italok", name:"Pizza & Döner",          text:"Pizza szeletek és döner — remek gyors harapnivalóra vagy késő esti nassolásra hazafelé.", map:"https://maps.app.goo.gl/sS7rN91fMvdcUk3Z8" },
+        { cat:"Étkezés és italok", name:"La Ciacolada",           text:"Nápolyi stílusú pizza. Kiváló minőség, de nagyon forgalmas — készüljön fel a várakozásra.", map:"https://maps.app.goo.gl/NyDTmGYx1ABagjvt7" },
+        { cat:"Étkezés és italok", name:"Bistrot Ratatouille",    text:"Véleményünk szerint Grado egyik legjobb helye, 1 percre az apartmantól. Friss étel, jó minőség és nagyon kedvező árak. Remek ebédre és vacsorára.", map:"https://maps.app.goo.gl/9whmgsj1WkGLmA5y5" },
+        { cat:"Étkezés és italok", name:"Mandracchio Bistrot",    text:"A kikötői negyedben. Friss étel és jó minőség nagyon ésszerű áron.", map:"https://maps.app.goo.gl/ZUWQKheoKZ5Fy5cM9" },
+        { cat:"Étkezés és italok", name:"Cardamomo",              text:"Elegáns étterem — tökéletes romantikus vacsorára vagy különleges alkalomra.", map:"https://maps.app.goo.gl/rUdDRQQ5H4icm2Q56" },
+        { cat:"Étkezés és italok", name:"Là de le Vele",          text:"Az óvárosban gyönyörű kilátással. Remek helyszín egy nyugodt étkezéshez.", map:"https://maps.app.goo.gl/MhMj8CLKZGdUbSeU9" },
+        { cat:"Étkezés és italok", name:"Il Panino",              text:"A legjobb hely sült kalamárihoz elvitelre. Tökéletes rágcsálnivaló városnézés közben.", map:"https://maps.app.goo.gl/n9gZ3PryWwMGQHwEA" },
+        { cat:"Fagylalt",          name:"Antoniazzi Gelateria",   text:"Véleményünk szerint a legjobb fagylalt Gradóban — az egyetlen, amelyet igazán ajánlunk. Számítson rövid sorban állásra — abszolút megéri.", map:"https://maps.app.goo.gl/gh6AauQ8VAr36diTA" },
+        { cat:"Parkok",            name:"Parco delle Rose",      text:"A környék egyetlen parkja, közvetlenül az apartman és az óváros közötti útvonalon. Rengeteg árnyék és nyugalom — mindig ajánljuk ezt az utat.", map:"https://maps.app.goo.gl/c32dWytXqCYcWkYr6" },
+        { cat:"Tevékenységek",     name:"Kite Life",             text:"Kiteszörfiskola és felszerelés-kölcsönző. Kezdőknek tanfolyamokhoz és tapasztalt lovasoknak napi bérléshez egyaránt ajánlott.", map:"https://maps.app.goo.gl/pLhPJ92ZbWFoiy7G8" },
+        { cat:"Tevékenységek",     name:"Terme Marine Di Grado", text:"Fűtött tengervizes medencék — köztük egy tetőterasz-medence —, termálfürdők és spa. Grado egyik igazi különlegessége, főszezonon kívül is nagyon ajánlott.", map:"https://maps.app.goo.gl/rZp3p2xKHNHAm3rT6" },
+        { cat:"Bevásárlás",        name:"Mercato Coperto",       text:"Fedett piac helyi hallal, zöldségekkel és sajtokkal. Reggel, vasárnap zárva." },
+        { cat:"Bevásárlás",        name:"Szupermarket",          text:"Az apartmanhoz legközelebbi szupermarket.", map:"https://maps.app.goo.gl/NR6rGyvmExya86tW6" },
+        { cat:"Szolgáltatások",    name:"Posta & ATM",           text:"Az apartmanhoz legközelebbi posta és bankjegykiadó.", map:"https://maps.app.goo.gl/hMEyPqYB2DiSGXdN8" },
+        { cat:"Szolgáltatások",    name:"Gyógyszertár",          text:"Az apartmanhoz legközelebbi gyógyszertár.", map:"https://maps.app.goo.gl/TiX3iEqZcctxs1vq9" },
       ],
     },
     grado: {
@@ -712,31 +798,10 @@ function HomePage({ t, setPage }) {
                 borderRadius:6, padding:"12px 24px", fontSize:14, textDecoration:"none", display:"inline-flex", alignItems:"center" }}>{h.book}</a>
             </div>
           </div>
-          <div style={{ flexShrink:0, display:"flex", flexDirection:"column", gap:8, paddingBottom:8 }}>
-            {h.amenities.slice(0,4).map((a,i) => (
-              <div key={i} style={{ background:`${C.white}15`, border:`1px solid ${C.white}22`,
-                borderRadius:6, padding:"8px 14px", fontSize:12, color:C.blueLight,
-                display:"flex", alignItems:"center", gap:8 }}>
-                <span style={{ width:6, height:6, borderRadius:"50%", background:C.yellow, flexShrink:0 }} />{a}
-              </div>
-            ))}
-          </div>
         </div>
         <BeachScene />
       </div>
 
-      {/* Amenities strip */}
-      <div style={{ background:C.cream }}>
-        <div style={{ maxWidth:1100, margin:"0 auto", padding:"16px 24px", display:"flex", gap:10, flexWrap:"wrap" }}>
-          {h.amenities.slice(4).map((a,i) => (
-            <span key={i} style={{ background:C.white, border:`1px solid ${C.border}`,
-              borderRadius:20, padding:"5px 14px", fontSize:12, color:C.textMid,
-              display:"flex", alignItems:"center", gap:6 }}>
-              <span style={{ width:5, height:5, borderRadius:"50%", background:C.blue }} />{a}
-            </span>
-          ))}
-        </div>
-      </div>
 
       {/* Cards grid */}
       <div style={{ background:C.cream, padding:"48px 0 64px" }}>
@@ -764,29 +829,111 @@ function HomePage({ t, setPage }) {
   );
 }
 
+const ROOM_PHOTOS = {
+  room_main:    ["/photos/room_main/_DSF2510.jpg","/photos/room_main/_DSF2512.jpg"],
+  room_kids:    ["/photos/room_kids/_DSF2519.jpg","/photos/room_kids/_DSF2521.jpg","/photos/room_kids/_DSF2525.jpg","/photos/room_kids/_DSF2530.jpg"],
+  room_living:  ["/photos/room_living/_DSF2473-s.png","/photos/room_living/_DSF2469.jpg","/photos/room_living/_DSF2472.jpg"],
+  room_kitchen: ["/photos/room_kitchen/_DSF2542.jpg","/photos/room_kitchen/_DSF2546.jpg"],
+  room_bath:    ["/photos/room_bath/_DSF2501.jpg","/photos/room_bath/_DSF2502.jpg"],
+  room_terrace: ["/photos/room_terrace/_DSF2533.jpg","/photos/room_terrace/_DSF2535.jpg"],
+  room_veranda: ["/photos/room_veranda/_DSF2456-s.png","/photos/room_veranda/_DSF2453.jpg","/photos/room_veranda/_DSF2457-s.png"],
+  room_parking: ["/photos/room_parking/_DSF2555.jpg","/photos/room_parking/_DSF2550.jpg","/photos/room_parking/_DSF2556.jpg","/photos/room_parking/_DSF2561.jpg"],
+};
+
 function HousePage({ t }) {
   const h = t.house;
+  const [lb, setLb] = useState(null); // { room, idx }
+
   const rooms = [
-    { k:"room_main", emoji:"🛏" }, { k:"room_kids", emoji:"🛏" },
-    { k:"room_living", emoji:"🛋" }, { k:"room_kitchen", emoji:"🍳" },
-    { k:"room_bath", emoji:"🚿" }, { k:"room_terrace", emoji:"🌿" },
+    { k:"room_living",  emoji:"🛋" }, { k:"room_veranda", emoji:"🌅" },
+    { k:"room_kitchen", emoji:"🍳" }, { k:"room_terrace", emoji:"🌿" },
+    { k:"room_main",    emoji:"🛏" }, { k:"room_kids",    emoji:"🛏" },
+    { k:"room_bath",    emoji:"🚿" }, { k:"room_parking", emoji:"🚗" },
   ];
+
+  const allPhotos = rooms.flatMap(({k, emoji}) =>
+    ROOM_PHOTOS[k].map((src, i) => ({ src, room:k, emoji, idx:i }))
+  );
+
+  useEffect(() => {
+    if (!lb) return;
+    const photos = ROOM_PHOTOS[lb.room];
+    const onKey = (e) => {
+      if (e.key === "Escape") setLb(null);
+      if (e.key === "ArrowRight" && photos.length > 1) setLb(l => ({ ...l, idx:(l.idx+1)%photos.length }));
+      if (e.key === "ArrowLeft"  && photos.length > 1) setLb(l => ({ ...l, idx:(l.idx-1+photos.length)%photos.length }));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lb]);
+
   return (
     <div style={{ background:C.cream, minHeight:"60vh", padding:"48px 0 64px" }}>
-      <div style={{ maxWidth:900, margin:"0 auto", padding:"0 24px" }}>
+      <div style={{ maxWidth:960, margin:"0 auto", padding:"0 24px" }}>
         <div style={{ width:40, height:4, background:C.yellow, borderRadius:2, marginBottom:16 }} />
         <h1 style={{ fontFamily:"Georgia, serif", fontSize:36, color:C.navy, margin:"0 0 12px", fontStyle:"italic" }}>{h.title}</h1>
-        <p style={{ fontSize:15, color:C.textMid, lineHeight:1.7, maxWidth:640, margin:"0 0 40px" }}>{h.sub}</p>
+        <p style={{ fontSize:15, color:C.textMid, lineHeight:1.7, maxWidth:640, margin:"0 0 32px" }}>{h.sub}</p>
+
+        {/* Scrollable photo overview — visible once photos are added */}
+        {allPhotos.length > 0 && (
+          <div style={{ marginBottom:40, overflowX:"auto", paddingBottom:4 }}>
+            <div style={{ display:"flex", gap:10 }}>
+              {allPhotos.map((p, i) => (
+                <div key={i} onClick={() => setLb({ room:p.room, idx:p.idx })}
+                  style={{ position:"relative", flexShrink:0, width:190, height:130,
+                    borderRadius:10, overflow:"hidden", cursor:"pointer" }}>
+                  <img src={p.src} style={{ width:"100%", height:"100%", objectFit:"cover" }} />
+                  {p.idx === 0 && (
+                    <div style={{ position:"absolute", bottom:0, left:0, right:0, padding:"22px 10px 7px",
+                      background:"linear-gradient(transparent,rgba(0,0,0,0.58))", color:"white", fontSize:11 }}>
+                      {p.emoji} {h[p.room]}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <h2 style={{ fontSize:18, color:C.navy, fontWeight:600, margin:"0 0 20px" }}>{h.rooms}</h2>
         <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(260px,1fr))", gap:16, marginBottom:40 }}>
-          {rooms.map(({k, emoji}) => (
-            <div key={k} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:12, padding:"20px" }}>
-              <div style={{ fontSize:20, marginBottom:8 }}>{emoji}</div>
-              <div style={{ fontSize:14, fontWeight:600, color:C.navy, marginBottom:6 }}>{h[k]}</div>
-              <div style={{ fontSize:13, color:C.textMid, lineHeight:1.6 }}>{h[k+"_desc"]}</div>
-            </div>
-          ))}
+          {rooms.map(({k, emoji}) => {
+            const photos = ROOM_PHOTOS[k];
+            return (
+              <div key={k} style={{ background:C.white, border:`1px solid ${C.border}`, borderRadius:12, overflow:"hidden" }}>
+                {/* Photo area */}
+                <div onClick={() => setLb({ room:k, idx:0 })}
+                  style={{ height:160, cursor:"pointer", position:"relative", overflow:"hidden",
+                    background:"#edeae3", display:"flex", alignItems:"center", justifyContent:"center" }}>
+                  {photos.length > 0 ? (
+                    <>
+                      <img src={photos[0]} style={{ width:"100%", height:"100%", objectFit:"cover" }} />
+                      {photos.length > 1 && (
+                        <div style={{ position:"absolute", bottom:8, right:10,
+                          background:"rgba(0,0,0,0.45)", color:"white", fontSize:11,
+                          padding:"2px 9px", borderRadius:10 }}>
+                          1 / {photos.length}
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <div style={{ textAlign:"center", color:"#9a9488", userSelect:"none" }}>
+                      <div style={{ fontSize:30 }}>{emoji}</div>
+                      <div style={{ fontSize:10, marginTop:5, letterSpacing:"0.6px", textTransform:"uppercase" }}>photos coming soon</div>
+                    </div>
+                  )}
+                </div>
+                {/* Text */}
+                <div style={{ padding:"16px 20px" }}>
+                  <div style={{ fontSize:14, fontWeight:600, color:C.navy, marginBottom:6 }}>{h[k]}</div>
+                  <div style={{ fontSize:13, color:C.textMid, lineHeight:1.6 }}>{h[k+"_desc"]}</div>
+                </div>
+              </div>
+            );
+          })}
         </div>
+
+        {/* What's included */}
         <div style={{ background:C.bluePale, border:`1px solid ${C.border}`, borderRadius:12, padding:"24px" }}>
           <h2 style={{ fontSize:16, fontWeight:600, color:C.navy, margin:"0 0 16px" }}>{h.amenities_title}</h2>
           <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit, minmax(200px,1fr))", gap:8 }}>
@@ -798,6 +945,68 @@ function HousePage({ t }) {
           </div>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lb && (() => {
+        const photos = ROOM_PHOTOS[lb.room];
+        const room = rooms.find(r => r.k === lb.room);
+        return (
+          <div onClick={() => setLb(null)}
+            style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.93)", zIndex:200,
+              display:"flex", flexDirection:"column" }}>
+            {/* Header */}
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
+              padding:"14px 20px", flexShrink:0 }} onClick={e => e.stopPropagation()}>
+              <span style={{ fontFamily:"Georgia, serif", fontSize:15, fontStyle:"italic", color:"rgba(255,255,255,0.85)" }}>
+                {room?.emoji}&nbsp;&nbsp;{h[lb.room]}
+              </span>
+              <button onClick={() => setLb(null)} style={{ background:"none", border:"none",
+                color:"white", fontSize:28, cursor:"pointer", lineHeight:1, padding:"0 4px", opacity:0.7 }}>×</button>
+            </div>
+            {/* Main image */}
+            <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center",
+              position:"relative", minHeight:0, padding:"0 56px" }} onClick={e => e.stopPropagation()}>
+              {photos.length > 0 ? (
+                <img src={photos[lb.idx]}
+                  style={{ maxHeight:"100%", maxWidth:"100%", objectFit:"contain", borderRadius:6 }} />
+              ) : (
+                <div style={{ textAlign:"center", color:"rgba(255,255,255,0.3)" }}>
+                  <div style={{ fontSize:72 }}>{room?.emoji}</div>
+                  <div style={{ fontSize:14, marginTop:16 }}>Photos coming soon</div>
+                </div>
+              )}
+              {photos.length > 1 && (<>
+                <button onClick={() => setLb(l => ({ ...l, idx:(l.idx-1+photos.length)%photos.length }))}
+                  style={{ position:"absolute", left:8, background:"rgba(255,255,255,0.1)", border:"none",
+                    color:"white", width:44, height:44, borderRadius:"50%", cursor:"pointer", fontSize:22 }}>‹</button>
+                <button onClick={() => setLb(l => ({ ...l, idx:(l.idx+1)%photos.length }))}
+                  style={{ position:"absolute", right:8, background:"rgba(255,255,255,0.1)", border:"none",
+                    color:"white", width:44, height:44, borderRadius:"50%", cursor:"pointer", fontSize:22 }}>›</button>
+              </>)}
+            </div>
+            {/* Counter */}
+            {photos.length > 1 && (
+              <div style={{ textAlign:"center", color:"rgba(255,255,255,0.4)", fontSize:12,
+                padding:"6px 0", flexShrink:0 }} onClick={e => e.stopPropagation()}>
+                {lb.idx+1} / {photos.length}
+              </div>
+            )}
+            {/* Filmstrip */}
+            {photos.length > 1 && (
+              <div style={{ padding:"8px 20px 20px", overflowX:"auto", display:"flex",
+                gap:8, flexShrink:0 }} onClick={e => e.stopPropagation()}>
+                {photos.map((src, i) => (
+                  <img key={i} src={src} onClick={() => setLb(l => ({ ...l, idx:i }))}
+                    style={{ height:58, width:82, objectFit:"cover", borderRadius:6, cursor:"pointer",
+                      flexShrink:0, opacity:i===lb.idx ? 1 : 0.45,
+                      outline:`2px solid ${i===lb.idx ? C.yellow : "transparent"}`,
+                      transition:"opacity 0.15s, outline 0.15s" }} />
+                ))}
+              </div>
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }
@@ -834,16 +1043,19 @@ function GuidePage({ t }) {
   );
 }
 
+
 function NeighborhoodPage({ t }) {
   const [cat, setCat] = useState(0);
   const h = t.neighborhood;
   const filtered = cat === 0 ? h.places : h.places.filter(p => p.cat === h.categories[cat]);
   return (
-    <div style={{ background:C.cream, minHeight:"60vh", padding:"48px 0 64px" }}>
-      <div style={{ maxWidth:900, margin:"0 auto", padding:"0 24px" }}>
+    <div style={{ background:C.cream, minHeight:"60vh", paddingBottom:64, paddingTop:48 }}>
+      <div style={{ maxWidth:900, margin:"0 auto", padding:"0 24px 0" }}>
         <div style={{ width:40, height:4, background:C.yellow, borderRadius:2, marginBottom:16 }} />
-        <h1 style={{ fontFamily:"Georgia, serif", fontSize:36, color:C.navy, margin:"0 0 12px", fontStyle:"italic" }}>{h.title}</h1>
-        <p style={{ fontSize:15, color:C.textMid, lineHeight:1.7, margin:"0 0 28px" }}>{h.sub}</p>
+        <h1 style={{ fontFamily:"Georgia, serif", fontSize:36, color:C.navy, margin:"0 0 4px", fontStyle:"italic" }}>{h.title}</h1>
+        <p style={{ fontFamily:"Georgia, serif", fontSize:15, fontStyle:"italic", color:"#4a7a52", margin:"0 0 20px", letterSpacing:"0.4px" }}>Città Giardino</p>
+        {h.intro && <p style={{ fontSize:15, color:C.textMid, lineHeight:1.8, margin:"0 0 24px", maxWidth:720 }}>{h.intro}</p>}
+        <p style={{ fontSize:13, color:C.blue, fontWeight:600, letterSpacing:"0.4px", margin:"0 0 20px", textTransform:"uppercase" }}>{h.sub}</p>
         <div style={{ display:"flex", gap:8, flexWrap:"wrap", marginBottom:28 }}>
           {h.categories.map((c,i) => (
             <button key={i} onClick={() => setCat(i)} style={{
@@ -861,6 +1073,15 @@ function NeighborhoodPage({ t }) {
                 textTransform:"uppercase", marginBottom:6 }}>{p.cat}</div>
               <div style={{ fontSize:14, fontWeight:700, color:C.navy, marginBottom:6 }}>{p.name}</div>
               <div style={{ fontSize:13, color:C.textMid, lineHeight:1.6 }}>{p.text}</div>
+              {p.map && (
+                <a href={p.map} target="_blank" rel="noopener noreferrer"
+                  style={{ display:"inline-flex", alignItems:"center", gap:5, marginTop:10,
+                    fontSize:11, fontWeight:600, color:C.blue, textDecoration:"none",
+                    border:`1px solid ${C.border}`, borderRadius:20, padding:"4px 10px",
+                    letterSpacing:"0.3px" }}>
+                  📍 Open in Maps
+                </a>
+              )}
             </div>
           ))}
         </div>
