@@ -921,11 +921,18 @@ function HousePage({ t }) {
 
   useEffect(() => {
     if (!lb) return;
-    const photos = ROOM_PHOTOS[lb.room];
+    const isGlobal = lb.globalIdx !== undefined;
+    const total = isGlobal ? allPhotos.length : ROOM_PHOTOS[lb.room].length;
     const onKey = (e) => {
       if (e.key === "Escape") setLb(null);
-      if (e.key === "ArrowRight" && photos.length > 1) setLb(l => ({ ...l, idx:(l.idx+1)%photos.length }));
-      if (e.key === "ArrowLeft"  && photos.length > 1) setLb(l => ({ ...l, idx:(l.idx-1+photos.length)%photos.length }));
+      if (e.key === "ArrowRight") {
+        if (isGlobal) setLb(l => ({ globalIdx:(l.globalIdx+1)%total }));
+        else if (total > 1) setLb(l => ({ ...l, idx:(l.idx+1)%total }));
+      }
+      if (e.key === "ArrowLeft") {
+        if (isGlobal) setLb(l => ({ globalIdx:(l.globalIdx-1+total)%total }));
+        else if (total > 1) setLb(l => ({ ...l, idx:(l.idx-1+total)%total }));
+      }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
@@ -943,7 +950,7 @@ function HousePage({ t }) {
           <div style={{ marginBottom:40, overflowX:"auto", paddingBottom:4 }}>
             <div style={{ display:"flex", gap:10 }}>
               {allPhotos.map((p, i) => (
-                <div key={i} onClick={() => setLb({ room:p.room, idx:p.idx })}
+                <div key={i} onClick={() => setLb({ globalIdx: i })}
                   style={{ position:"relative", flexShrink:0, width:190, height:130,
                     borderRadius:10, overflow:"hidden", cursor:"pointer" }}>
                   <img src={p.src} style={{ width:"100%", height:"100%", objectFit:"cover" }} />
@@ -1012,8 +1019,18 @@ function HousePage({ t }) {
 
       {/* Lightbox */}
       {lb && (() => {
-        const photos = ROOM_PHOTOS[lb.room];
-        const room = rooms.find(r => r.k === lb.room);
+        const isGlobal = lb.globalIdx !== undefined;
+        const photos = isGlobal ? allPhotos.map(p => p.src) : ROOM_PHOTOS[lb.room];
+        const idx    = isGlobal ? lb.globalIdx : lb.idx;
+        const roomKey = isGlobal ? allPhotos[lb.globalIdx].room : lb.room;
+        const room   = rooms.find(r => r.k === roomKey);
+        const goPrev = () => isGlobal
+          ? setLb(l => ({ globalIdx:(l.globalIdx-1+photos.length)%photos.length }))
+          : setLb(l => ({ ...l, idx:(l.idx-1+photos.length)%photos.length }));
+        const goNext = () => isGlobal
+          ? setLb(l => ({ globalIdx:(l.globalIdx+1)%photos.length }))
+          : setLb(l => ({ ...l, idx:(l.idx+1)%photos.length }));
+        const goTo = (i) => isGlobal ? setLb({ globalIdx:i }) : setLb(l => ({ ...l, idx:i }));
         return (
           <div onClick={() => setLb(null)}
             style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.93)", zIndex:200,
@@ -1022,7 +1039,7 @@ function HousePage({ t }) {
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center",
               padding:"14px 20px", flexShrink:0 }} onClick={e => e.stopPropagation()}>
               <span style={{ fontFamily:"Georgia, serif", fontSize:15, fontStyle:"italic", color:"rgba(255,255,255,0.85)" }}>
-                {room?.emoji}&nbsp;&nbsp;{h[lb.room]}
+                {room?.emoji}&nbsp;&nbsp;{h[roomKey]}
               </span>
               <button onClick={() => setLb(null)} style={{ background:"none", border:"none",
                 color:"white", fontSize:28, cursor:"pointer", lineHeight:1, padding:"0 4px", opacity:0.7 }}>×</button>
@@ -1030,44 +1047,33 @@ function HousePage({ t }) {
             {/* Main image */}
             <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center",
               position:"relative", minHeight:0, padding:"0 56px" }} onClick={e => e.stopPropagation()}>
-              {photos.length > 0 ? (
-                <img src={photos[lb.idx]}
-                  style={{ maxHeight:"100%", maxWidth:"100%", objectFit:"contain", borderRadius:6 }} />
-              ) : (
-                <div style={{ textAlign:"center", color:"rgba(255,255,255,0.3)" }}>
-                  <div style={{ fontSize:72 }}>{room?.emoji}</div>
-                  <div style={{ fontSize:14, marginTop:16 }}>Photos coming soon</div>
-                </div>
-              )}
+              <img src={photos[idx]}
+                style={{ maxHeight:"100%", maxWidth:"100%", objectFit:"contain", borderRadius:6 }} />
               {photos.length > 1 && (<>
-                <button onClick={() => setLb(l => ({ ...l, idx:(l.idx-1+photos.length)%photos.length }))}
+                <button onClick={goPrev}
                   style={{ position:"absolute", left:8, background:"rgba(255,255,255,0.1)", border:"none",
                     color:"white", width:44, height:44, borderRadius:"50%", cursor:"pointer", fontSize:22 }}>‹</button>
-                <button onClick={() => setLb(l => ({ ...l, idx:(l.idx+1)%photos.length }))}
+                <button onClick={goNext}
                   style={{ position:"absolute", right:8, background:"rgba(255,255,255,0.1)", border:"none",
                     color:"white", width:44, height:44, borderRadius:"50%", cursor:"pointer", fontSize:22 }}>›</button>
               </>)}
             </div>
             {/* Counter */}
-            {photos.length > 1 && (
-              <div style={{ textAlign:"center", color:"rgba(255,255,255,0.4)", fontSize:12,
-                padding:"6px 0", flexShrink:0 }} onClick={e => e.stopPropagation()}>
-                {lb.idx+1} / {photos.length}
-              </div>
-            )}
+            <div style={{ textAlign:"center", color:"rgba(255,255,255,0.4)", fontSize:12,
+              padding:"6px 0", flexShrink:0 }} onClick={e => e.stopPropagation()}>
+              {idx+1} / {photos.length}
+            </div>
             {/* Filmstrip */}
-            {photos.length > 1 && (
-              <div style={{ padding:"8px 20px 20px", overflowX:"auto", display:"flex",
-                gap:8, flexShrink:0 }} onClick={e => e.stopPropagation()}>
-                {photos.map((src, i) => (
-                  <img key={i} src={src} onClick={() => setLb(l => ({ ...l, idx:i }))}
-                    style={{ height:58, width:82, objectFit:"cover", borderRadius:6, cursor:"pointer",
-                      flexShrink:0, opacity:i===lb.idx ? 1 : 0.45,
-                      outline:`2px solid ${i===lb.idx ? C.yellow : "transparent"}`,
-                      transition:"opacity 0.15s, outline 0.15s" }} />
-                ))}
-              </div>
-            )}
+            <div style={{ padding:"8px 20px 20px", overflowX:"auto", display:"flex",
+              gap:8, flexShrink:0 }} onClick={e => e.stopPropagation()}>
+              {photos.map((src, i) => (
+                <img key={i} src={src} onClick={() => goTo(i)}
+                  style={{ height:58, width:82, objectFit:"cover", borderRadius:6, cursor:"pointer",
+                    flexShrink:0, opacity:i===idx ? 1 : 0.45,
+                    outline:`2px solid ${i===idx ? C.yellow : "transparent"}`,
+                    transition:"opacity 0.15s, outline 0.15s" }} />
+              ))}
+            </div>
           </div>
         );
       })()}
